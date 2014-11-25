@@ -63,7 +63,43 @@ class ProductsController extends AppController {
 			throw new NotFoundException(__('Invalid product'));
 		}
 		$options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
-		$this->set('product', $this->Product->find('first', $options));
+		$selProduct = $this->Product->find('first', $options);
+		$this->set('product', $selProduct);
+
+		// gather assigned product attributes
+		$this->loadModel('ProductAttribute');
+
+		$options = array('conditions' => array(
+											'ProductAttribute.itemNumber' => $selProduct['Product']['itemNumber'],
+											));
+		$attributes = $this->ProductAttribute->find('all', $options);
+
+		$this->set('attributes',$attributes);
+
+		// gather attribute type data
+		$this->loadModel('ProductAttributeType');
+
+		// gather all values
+		$attributeTypes = $this->ProductAttributeType->find('all');
+
+		// convert to single dimensional array
+		$attrTypesArr = array();
+		foreach($attributeTypes as $attributeType){
+			$attrTypesArr[$attributeType['ProductAttributeType']['id']] = $attributeType['ProductAttributeType']['title'];
+		}
+
+		$this->set('attributeTypes',$attrTypesArr);
+
+		// gather assigned product attributes
+		$this->loadModel('ProductType');
+
+		$options = array('conditions' => array(
+											'ProductType.id' => $selProduct['Product']['prodType'],
+											));
+		$productType = $this->ProductType->find('first', $options);
+
+		$this->set('productType',$productType);
+
 	}
 
 /**
@@ -97,12 +133,77 @@ class ProductsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Product->create();
 			if ($this->Product->save($this->request->data)) {
+
+				// save product attribute values
+				$this->loadModel('ProductAttribute');
+				$productAttrs = $this->request->data('attribute');
+
+				foreach($productAttrs as $idx => $productAttr){
+					// gather selected attribute data
+                	$attributeVal = trim($productAttr);
+
+        			// save attribute to database
+        			$options = array('conditions' => array(
+    													'ProductAttribute.attributeId' => $idx, 
+    													'ProductAttribute.itemNumber' => $this->request->data('Product.itemNumber'),
+    													));
+					$attribute = $this->ProductAttribute->find('first', $options);
+					if(!$attribute){
+	        			$this->ProductAttribute->create();
+	            	} else {
+	            		$this->ProductAttribute->id = $this->request->data('Product.itemNumber');
+	            	}
+	                $this->ProductAttribute->save(
+	                    array(
+                        	'attributeId' => $idx,
+                        	'itemNumber' => $this->request->data('Product.itemNumber'),
+                        	'content' => $attributeVal,
+	                    )
+	                );
+	                $this->ProductAttribute->clear();
+
+				}
+
 				$this->Session->setFlash(__('The product has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
 			}
 		}
+	}
+
+	// used to enable attribute options for new products
+	public function admin_product_attributes_ajax(){
+		// set ajax layout
+		$this->layout='ajax';
+
+		// gather selected product type id
+		$id = $this->request->data('id');
+
+		// gather attribute type data
+		$this->loadModel('ProductAttributeType');
+
+		// gather all values
+		$attributeTypes = $this->ProductAttributeType->find('all');
+
+		// convert to single dimensional array
+		$attrTypesArr = array();
+		foreach($attributeTypes as $attributeType){
+			$attrTypesArr[$attributeType['ProductAttributeType']['id']] = $attributeType['ProductAttributeType']['title'];
+		}
+
+		$this->set('attributeTypes',$attrTypesArr);
+
+		// gather assigned product attributes
+		$this->loadModel('ProductType');
+
+		$options = array('conditions' => array(
+											'ProductType.id' => $id = $this->request->data('id'),
+											));
+		$productType = $this->ProductType->find('first', $options);
+
+		$this->set('productType',$productType);
+
 	}
 
 /**
@@ -118,6 +219,37 @@ class ProductsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Product->save($this->request->data)) {
+
+				// save product attribute values
+				$this->loadModel('ProductAttribute');
+				$productAttrs = $this->request->data('attribute');
+
+				foreach($productAttrs as $idx => $productAttr){
+					// gather selected attribute data
+                	$attributeVal = trim($productAttr);
+
+        			// save attribute to database
+        			$options = array('conditions' => array(
+    													'ProductAttribute.attributeId' => $idx, 
+    													'ProductAttribute.itemNumber' => $id,
+    													));
+					$attribute = $this->ProductAttribute->find('first', $options);
+					if(!$attribute){
+	        			$this->ProductAttribute->create();
+	            	} else {
+	            		$this->ProductAttribute->id = $idx;
+	            	}
+	                $this->ProductAttribute->save(
+	                    array(
+                        	'attributeId' => $idx,
+                        	'itemNumber' => $id,
+                        	'content' => $attributeVal,
+	                    )
+	                );
+	                $this->ProductAttribute->clear();
+
+				}
+
 				$this->Session->setFlash(__('The product has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
@@ -125,7 +257,32 @@ class ProductsController extends AppController {
 			}
 		} else {
 			$options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
-			$this->request->data = $this->Product->find('first', $options);
+			$selProduct = $this->Product->find('first', $options);
+			$this->request->data = $selProduct;
+
+			// gather assigned product attributes
+			$this->loadModel('ProductAttribute');
+
+			$options = array('conditions' => array(
+												'ProductAttribute.itemNumber' => $selProduct['Product']['itemNumber'],
+												));
+			$attributes = $this->ProductAttribute->find('all', $options);
+
+			$this->set('attributes',$attributes);
+
+			// gather attribute type data
+			$this->loadModel('ProductAttributeType');
+
+			// gather all values
+			$attributeTypes = $this->ProductAttributeType->find('all');
+
+			// convert to single dimensional array
+			$attrTypesArr = array();
+			foreach($attributeTypes as $attributeType){
+				$attrTypesArr[$attributeType['ProductAttributeType']['id']] = $attributeType['ProductAttributeType']['title'];
+			}
+
+			$this->set('attributeTypes',$attrTypesArr);
 
 			// load attributes for display
 			$this->loadModel('ProductType');
@@ -166,6 +323,12 @@ class ProductsController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Product->delete()) {
+
+			// delete assigned product attributes
+			$this->loadModel('ProductAttribute');
+
+			$this->ProductAttribute->deleteAll(array('ProductAttribute.itemNumber' => $id), false);
+
 			$this->Session->setFlash(__('The product has been deleted.'));
 		} else {
 			$this->Session->setFlash(__('The product could not be deleted. Please, try again.'));

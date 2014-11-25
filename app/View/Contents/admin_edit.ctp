@@ -7,17 +7,23 @@
 		echo $this->Form->input('sortOrder', array('label'=>'Sort Order', 'class'=>'form-control',));
 		echo $this->Form->input('title', array('label'=>'Page Title', 'class'=>'form-control',));
 		echo $this->Form->input('header', array('label'=>'Page Header', 'class'=>'form-control',));
-		echo $this->Form->input('content', array('label'=>'Page Content', 'class'=>'form-control',));
+		echo $this->Wysiwyg->input('content', array('label'=>'Page Content', 'class'=>'form-control', 'id'=>'content'));
 		echo $this->Form->input('pageImage', array('label'=>'Page Image', 'type' => 'file', 'class'=>'form-control',));
 		echo '<p>Current file: <a target="_blank" href="/app/webroot/'.$this->Form->value('Content.pageImage').'">'.$this->Form->value('Content.pageImage').'</a></p>';
+		?>
+		<h3><?php echo __('Product Information'); ?></h3>
+		<?php
 		echo $this->Form->input('csvFile', array('label'=>'Products CSV', 'type' => 'file', 'class'=>'form-control',));
 		echo '<p>Current file: <a target="_blank" href="/app/webroot/'.$this->Form->value('Content.csvFile').'">'.$this->Form->value('Content.csvFile').'</a></p>';
-		echo $this->Form->input('sefURL', array('label'=>'Search Engine Friendly URL', 'class'=>'form-control',));
-		echo $this->Form->input('titleTag', array('label'=>'Header Title', 'class'=>'form-control',));
-		echo $this->Form->input('metaDescription', array('label'=>'Meta Description', 'class'=>'form-control',));
 		echo $this->Form->input('vendorId', array('label'=>'Vendor', 'class'=>'form-control','options'=>$vendors));
 		echo $this->Form->input('parentId', array('label'=>'Parent Page', 'class'=>'form-control','options'=>$contents));
 		echo $this->Form->input('productListType', array('class'=>'form-control','options'=>$productTypes));
+		?>
+		<h3><?php echo __('SEO and Meta'); ?></h3>
+		<?php
+		echo $this->Form->input('sefURL', array('label'=>'Search Engine Friendly URL', 'class'=>'form-control',));
+		echo $this->Form->input('titleTag', array('label'=>'Header Title', 'class'=>'form-control',));
+		echo $this->Form->input('metaDescription', array('label'=>'Meta Description', 'class'=>'form-control',));
 	?>
 	</fieldset><br>
 <?php 

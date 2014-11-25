@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Edit Product'); ?></legend>
 	<?php
-		echo $this->Form->input('itemNumber');
+		echo $this->Form->input('itemNumber', array('type' => 'text', 'class'=>'form-control'));
 		echo $this->Form->input('price', array('class'=>'form-control',));
 		echo $this->Form->input('quantity', array('class'=>'form-control',));
 		echo $this->Form->input('prodType', array( 'class'=>'form-control',
@@ -13,6 +13,14 @@
             'options' => $contents
         ));
 	?>
+	<h3><?php echo __('Attributes'); ?></h3>
+	<dl>
+		<?php
+		foreach($attributes as $attribute){
+			echo $this->Form->input('attribute.'.$attribute['ProductAttribute']['attributeId'], array('class'=>'form-control', 'label'=>$attributeTypes[$attribute['ProductAttribute']['attributeId']], 'value'=>$attribute['ProductAttribute']['content']));
+		}
+		?>
+	</dl>
 	</fieldset><br>
 <?php 
 echo $this->Form->submit('Submit',array(

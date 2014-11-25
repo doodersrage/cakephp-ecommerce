@@ -9,17 +9,24 @@ App::uses('AppController', 'Controller');
  */
 class ContentsController extends AppController {
 
-public function beforeFilter() {
-	// ensure parent class before filter is callled
-	parent::beforeFilter();
-		
-	// assign admin layout for admin users
-	if (isset($this->params['prefix']) && $this->params['prefix'] == 'admin') {
-        $this->layout = 'admin';
-    }
-    // allow default access to actions
-    $this->Auth->allow('menu','view');
-}
+	public $helpers = array(
+        'Wysiwyg.Wysiwyg' => array(
+            '_editor' => 'Tinymce',
+            'theme_advanced_toolbar_align' => 'right',
+        )
+    );
+
+	public function beforeFilter() {
+		// ensure parent class before filter is callled
+		parent::beforeFilter();
+			
+		// assign admin layout for admin users
+		if (isset($this->params['prefix']) && $this->params['prefix'] == 'admin') {
+	        $this->layout = 'admin';
+	    }
+	    // allow default access to actions
+	    $this->Auth->allow('menu','view','display');
+	}
 
 /**
  * Components
@@ -36,6 +43,111 @@ public function beforeFilter() {
 	public function index() {
 		$this->Content->recursive = 0;
 		$this->set('contents', $this->Paginator->paginate());
+	}
+
+	// display requested front-end page
+	public function display() {
+			$path = func_get_args();
+
+			// if SEF page url assigned look up and load page
+			if (!empty($path[0])) {
+				// if supplied value is an integer searvh for page by index value
+				if(is_int($path[0])){
+					if (!$this->Content->exists($path[0])) {
+						throw new NotFoundException(__('Invalid content'));
+					}
+					$options = array('conditions' => array('Content.' . $this->Content->primaryKey => $id));
+					$content = $this->Content->find('first', $options);
+					if($content){
+						// set page title
+						if($content['Content']['titleTag']){
+							$this->set('title_for_layout', $content['Content']['titleTag']);
+						} else {
+							$this->set('title_for_layout', $content['Content']['title']);
+						}
+						// gather associated product data
+						$this->gatherProducts($content['Content']['id'],$content['Content']['productListType']);
+						// store page content
+						$this->set('content', $content);
+					} else {
+						throw new NotFoundException(__('Invalid content'));
+					}
+				// if else or string is provided looks for page using SEF URL
+				} else {
+					$options = array('conditions' => array('Content.sefURL' => trim($path[0])));
+					$content = $this->Content->find('first', $options);
+					if($content){
+						// set page title
+						if($content['Content']['titleTag']){
+							$this->set('title_for_layout', $content['Content']['titleTag']);
+						} else {
+							$this->set('title_for_layout', $content['Content']['title']);
+						}
+						// gather associated product data
+						$this->gatherProducts($content['Content']['id'],$content['Content']['productListType']);
+						// store page content
+						$this->set('content', $content);
+					} else {
+						throw new NotFoundException(__('Invalid content'));
+					}
+				}
+			} else {
+				throw new NotFoundException(__('Invalid content'));
+			}
+	}
+
+	// gather product list information for selected page
+	public function gatherProducts($idx,$productListType){
+		// load needed data models
+		$this->loadModel('ProductAttribute');
+		$this->loadModel('ProductAttributeType');
+		$this->loadModel('ProductType');
+		$this->loadModel('Product');
+
+		// load products data
+		$options = array('conditions' => array('Product.contentId' => $idx));
+		$products = $this->Product->find('all', $options);
+
+		// continue loading attribute if products have been found
+		if($products){
+
+			// store products for view
+			$this->set('products', $products);
+
+			// gather product attributes
+			$productAttributes = array();
+			$selAttributes = array();
+			foreach($products as $product){
+
+				$options = array('conditions' => array('ProductAttribute.itemNumber' => $product['Product']['itemNumber']));
+				$selAttributes = $this->ProductAttribute->find('all', $options);
+
+				// convert to multi-dimensional array
+				foreach($selAttributes as $prodAttrSel){
+					$productAttributes[$product['Product']['itemNumber']][$prodAttrSel['ProductAttribute']['attributeId']] = $prodAttrSel;
+				}
+
+			}
+			// store attributes for view
+			if($productAttributes){
+				
+				$this->set('productAttributes',$productAttributes);
+
+				// retrieve product types
+				$options = array('conditions' => array('ProductType.id' => $productListType));
+				$productType = $this->ProductType->find('first', $options);
+				$this->set('productType',$productType);
+
+				// gather attribute headers
+				$attributes = $this->ProductAttributeType->find('all');
+				$attrArr = array();
+				foreach($attributes as $attribute){
+					$attrArr[$attribute['ProductAttributeType']['id']] = $attribute['ProductAttributeType']['title'];
+				}
+				$this->set('attributes', $attrArr);
+			}
+		}
+
 	}
 
 /**
@@ -126,7 +238,16 @@ public function beforeFilter() {
 	        			$quantity = trim($row[5]);
 	        			$priceEach = trim($row[6]);
 
-        				$this->Product->create();
+	        			// save product to database
+	        			$options = array('conditions' => array(
+        													'Product.itemNumber' => $itemNumber, 
+        													));
+						$product = $this->Product->find('first', $options);
+						if(!$product){
+        					$this->Product->create();
+        				} else {
+        					$this->Product->itemNumber = $itemNumber;
+        				}
 		                $this->Product->save(
 		                    array(
 	                        	'itemNumber' => $itemNumber,
@@ -138,248 +259,33 @@ public function beforeFilter() {
 		                );
 		                $this->Product->clear();
 
-	        			// generate new product then assign attributes
-	        			$material = trim($row[1]);
+		                // assign product attributes
+		                foreach($attrTypesArr as $idx => $val){
+		                	
+		                	// gather selected attribute data
+		                	$attributeVal = trim($row[$idx]);
 
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[1][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[1][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $material,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
+		        			// save attribute to database
+		        			$options = array('conditions' => array(
+	        													'ProductAttribute.attributeId' => $val[1], 
+	        													'ProductAttribute.itemNumber' => $itemNumber,
+	        													));
+							$attribute = $this->ProductAttribute->find('first', $options);
+							if(!$attribute){
+			        			$this->ProductAttribute->create();
+			            	} else {
+			            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
+			            	}
+			                $this->ProductAttribute->save(
+			                    array(
+		                        	'attributeId' => $val[1],
+		                        	'itemNumber' => $itemNumber,
+		                        	'content' => $attributeVal,
+			                    )
+			                );
+			                $this->ProductAttribute->clear();
 
-	        			$sizemm = trim($row[2]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[2][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[2][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $sizemm,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$thicknessmm = trim($row[3]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[3][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[3][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $thicknessmm,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$quality = trim($row[4]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[4][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[4][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $quality,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$flatness = trim($row[7]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[7][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[7][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $flatness,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$roughness = trim($row[8]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[8][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[8][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $roughness,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$ttv = trim($row[9]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[9][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[9][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $ttv,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$orientation = trim($row[10]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[10][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[10][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $orientation,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$thicknesstol = trim($row[11]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[11][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[11][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $thicknesstol,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$dimensiontol = trim($row[12]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[12][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[12][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $dimensiontol,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
-
-	        			$grade = trim($row[13]);
-
-	        			// save attribute to database
-	        			$options = array('conditions' => array(
-        													'ProductAttribute.attributeId' => $attrTypesArr[13][1], 
-        													'ProductAttribute.itemNumber' => $itemNumber,
-        													));
-						$attribute = $this->ProductAttribute->find('first', $options);
-						if(!$attribute){
-		        			$this->ProductAttribute->create();
-		            	} else {
-		            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-		            	}
-		                $this->ProductAttribute->save(
-		                    array(
-	                        	'attributeId' => $attrTypesArr[13][1],
-	                        	'itemNumber' => $itemNumber,
-	                        	'content' => $grade,
-		                    )
-		                );
-		                $this->ProductAttribute->clear();
+		                }
 
 	        		break;
 	        	}
@@ -578,6 +484,24 @@ public function beforeFilter() {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Content->delete()) {
+
+			// delete assigned products and attributes
+			$this->loadModel('Product');
+			$this->loadModel('ProductAttribute');
+
+			$options = array('conditions' => array(
+												'Product.contentId' => $id,
+												));
+			$products = $this->Product->find('all', $options);
+
+			// delete all product attributes
+			foreach($products as $product){
+				$this->ProductAttribute->deleteAll(array('ProductAttribute.itemNumber' => $product['Product']['itemNumber']), false);
+			}
+
+			// delete all products
+			$this->Product->deleteAll(array('Product.contentId' => $id), false);
+
 			$this->Session->setFlash(__('The content has been deleted.'));
 		} else {
 			$this->Session->setFlash(__('The content could not be deleted. Please, try again.'));
@@ -589,10 +513,10 @@ public function beforeFilter() {
 // generate menu values from found pages
 public function menu() {
     if (isset($this->params['requested']) && $this->params['requested'] == true) {
-        $menus = $this->Content->find('all');
+        $menus = $this->Content->find('all', array('order' => array('sortOrder Desc', 'title ASC') ));
         return $menus;
     } else {
-        $this->set('menus', $this->Content->find('all'));
+        $this->set('menus', $this->Content->find('all', array('order' => array('sortOrder Desc', 'title ASC') )));
     }
 }
 

@@ -5,6 +5,7 @@
     "require": {
         "slywalker/boost_cake": "~1.0",
         "twbs/bootstrap": "~3.3",
-        "cakephp/debug_kit": "2.2.*"
+        "cakephp/debug_kit": "2.2.*",
+        "josegonzalez/cakephp-wysiwyg": "dev-master"
     }
 }

@@ -196,7 +196,7 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-	<?php echo $this->fetch('script'); ?>
+	<?php //echo $this->fetch('script'); ?>
 
 </body>
 </html>

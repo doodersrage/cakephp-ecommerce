@@ -8,6 +8,7 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
+			<th><?php echo $this->Paginator->sort('Sort Order'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	</thead>
@@ -16,11 +17,14 @@
 	<tr>
 		<td><?php echo h($content['Content']['id']); ?>&nbsp;</td>
 		<td><?php echo h($content['Content']['title']); ?>&nbsp;</td>
+		<td><?php echo h($content['Content']['sortOrder']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $content['Content']['id']), array('class'=>'btn btn-primary')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $content['Content']['id']), array('class'=>'btn btn-primary')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $content['Content']['id']), array('class'=>'btn btn-primary'), __('Are you sure you want to delete # %s?', $content['Content']['id'])); ?>
-			<a href="javascript: void(0)" onClick="addProducts(<?php echo $content['Content']['id']; ?>)" class="btn btn-primary">Import Products</a>
+			<?php if($content['Content']['csvFile']){ ?>
+				<a href="javascript: void(0)" onClick="addProducts(<?php echo $content['Content']['id']; ?>)" class="btn btn-primary">Import Products</a>
+			<?php } ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

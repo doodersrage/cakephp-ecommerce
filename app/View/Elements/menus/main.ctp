@@ -5,7 +5,7 @@
     foreach($menus as $menu) : 
 ?>
     <li>
-    <?="<a href='".DS.'content'.DS.$menu['Content']['sefURL']."'>".$menu['Content']['title']."</a>"; ?>
+    <?="<a href='".DS.'pages'.DS.$menu['Content']['sefURL']."'>".$menu['Content']['title']."</a>"; ?>
     </li>
 <? endforeach; ?>
 </ul>
