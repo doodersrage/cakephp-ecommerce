@@ -80,6 +80,7 @@ class ProductTypesController extends AppController {
 		// load attributes for display
 		$this->loadModel('ProductAttributeType');
 		$this->set('attributes',$this->ProductAttributeType->find('all'));
+		$this->set('jsIncludes',array('prodTypes'));  
 
 		if ($this->request->is('post')) {
 			// store selected attribute data
@@ -87,14 +88,34 @@ class ProductTypesController extends AppController {
 			$selAttrHide = $this->request->data('attributesHide');
 			$attrArray = serialize(array($selAttr, $selAttrHide));
 			$this->request->data['ProductType']['attributes'] = $attrArray;
+			
+			// save tiered pricing settings
+			$priceTiers = array();
+			$priceText = $this->request->data('clmText');
+			$maxValues = $this->request->data('maxValue');
+			if(!empty($maxValues)){
+				foreach($this->request->data('maxValue') as $idx => $price){
+					if(!empty($price)){
+						$priceTiers[] = array($price, $priceText[$idx]);
+					}
+				}
+			}
+			
+			$this->request->data['ProductType']['tieredPricing'] = serialize($priceTiers);
 
 			$this->ProductType->create();
 
 			if ($this->ProductType->save($this->request->data)) {
-				$this->Session->setFlash(__('The product type has been saved.'));
+				$this->Session->setFlash(__('The product type has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		}
 	}
@@ -107,6 +128,7 @@ class ProductTypesController extends AppController {
  * @return void
  */
 	public function admin_edit($id = null) {
+		$this->set('jsIncludes',array('prodTypes'));  
 		if (!$this->ProductType->exists($id)) {
 			throw new NotFoundException(__('Invalid product type'));
 		}
@@ -116,12 +138,32 @@ class ProductTypesController extends AppController {
 			$selAttrHide = $this->request->data('attributesHide');
 			$attrArray = serialize(array($selAttr, $selAttrHide));
 			$this->request->data['ProductType']['attributes'] = $attrArray;
+
+			// save tiered pricing settings
+			$priceTiers = array();
+			$priceText = $this->request->data('clmText');
+			$maxValues = $this->request->data('maxValue');
+			if(!empty($maxValues)){
+				foreach($this->request->data('maxValue') as $idx => $price){
+					if(!empty($price)){
+						$priceTiers[] = array($price, $priceText[$idx]);
+					}
+				}
+			}
+			
+			$this->request->data['ProductType']['tieredPricing'] = serialize($priceTiers);
 			
 			if ($this->ProductType->save($this->request->data)) {
-				$this->Session->setFlash(__('The product type has been saved.'));
+				$this->Session->setFlash(__('The product type has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		} else {
 			$options = array('conditions' => array('ProductType.' . $this->ProductType->primaryKey => $id));
@@ -130,6 +172,9 @@ class ProductTypesController extends AppController {
 			// load attributes for display
 			$this->loadModel('ProductAttributeType');
 			$this->set('attributes',$this->ProductAttributeType->find('all'));
+			
+			// unserialize tiered prices
+			$this->set('tieredPricing',unserialize($this->request->data['ProductType']['tieredPricing']));
 		}
 	}
 
@@ -147,9 +192,15 @@ class ProductTypesController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->ProductType->delete()) {
-			$this->Session->setFlash(__('The product type has been deleted.'));
+			$this->Session->setFlash(__('The product type has been deleted.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		} else {
-			$this->Session->setFlash(__('The product type could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The product type could not be deleted. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

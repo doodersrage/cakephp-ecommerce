@@ -14,7 +14,7 @@
     	updateAttributes($('#prodType').val());
     });
 </script>
-<div class="col-lg-9 products form">
+<div class="col-lg-9 col-md-9 products form">
 <?php echo $this->Form->create('Product'); ?>
 	<fieldset>
 		<legend><?php echo __('Add Product'); ?></legend>
@@ -22,12 +22,15 @@
 		echo $this->Form->input('itemNumber', array('type' => 'text', 'class'=>'form-control'));
 		echo $this->Form->input('price', array('class'=>'form-control'));
 		echo $this->Form->input('quantity', array('class'=>'form-control',));
+		echo $this->Form->input('minQty', array('class'=>'form-control',));
 		echo $this->Form->input('prodType', array('id'=>'prodType' ,'class'=>'form-control',
             'options' => $productTypes
         ));
         echo $this->Form->input('contentId', array('class'=>'form-control',
             'options' => $contents
         ));
+        echo $this->Form->input('fullLength', array('label'=>'Full Length','class'=>'form-control',));
+        echo $this->Form->input('fullWidth', array('label'=>'Full Width','class'=>'form-control',));
 	?>
 	<div class="prodAttributes">
 	</div>
@@ -39,7 +42,7 @@ echo $this->Form->submit('Submit',array(
 echo $this->Form->end(); ?><br>
 
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 

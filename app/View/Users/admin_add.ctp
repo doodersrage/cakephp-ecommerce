@@ -1,4 +1,4 @@
-<div class="col-lg-9 users form">
+<div class="col-lg-9 col-md-9 users form">
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
 		<legend><?php echo __('Add User'); ?></legend>
@@ -18,7 +18,7 @@ echo $this->Form->submit('Submit',array(
 echo $this->Form->end(); ?><br>
 
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 

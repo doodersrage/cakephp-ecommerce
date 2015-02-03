@@ -43,6 +43,14 @@ class AppController extends Controller {
         'DebugKit.Toolbar',
         'Session',
         'Auth' => array(
+			'flash' => array(
+				'element' => 'alert',
+				'key' => 'auth',
+				'params' => array(
+					'plugin' => 'BoostCake',
+					'class' => 'alert-error'
+				)
+			),
             'loginAction' => array(
                 'controller' => 'users',
                 'action' => 'login',
@@ -50,14 +58,12 @@ class AppController extends Controller {
             'authError' => "Your username and password is incorrect, please try again.",
             'redirect' => array("controller" => "users", "action" => "profile"),
             'loginRedirect' => array(
-                'controller' => 'pages',
-                'action' => 'display',
-                'home'
+                'controller' => 'users',
+                'action' => 'index'
             ),
             'logoutRedirect' => array(
-                'controller' => 'pages',
-                'action' => 'display',
-                'home'
+                'controller' => 'users',
+                'action' => 'login'
             ),
             'authenticate' => array(
                 'Form' => array(

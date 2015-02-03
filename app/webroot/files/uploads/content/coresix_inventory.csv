@@ -1,1 +1,7 @@
-Item Number,Material,Size (mm),Thickness (mm),Quality,Quantity,Price Each,Flatness,Roughness,TTV,Orientation,Thickness Tol,Dimension Tol,GradeA10001,Eagle XG,100 x 100,0.5,60/40,82,12,2um,GA,,, +/- 5um, +/- 0.20mm,A10002,Borofloat,150mm ¯,0.7,20/10,36,23.5,,,2um,SEMI Flat, +/- 25um, +/- 0.20mm,A10003,Eagle XG,200mm ¯,0.3,80/50,123,18.25,2um,,5um,SEMI Notch, +/- 50um, +/- 0.20mm,A10004,Soda Lime,76.2mm ¯,1.1,20/10,15,21.5,,,,, +/- 20um, +/- 0.10mm,A10005,Fused Silica,150mm ¯,0.75,40/20,68,32.1,,,,, +/- 25um, +/- 0.20mm,UVA10006,Soda Lime,152 x 152,2,60/40,21,12.9,,,,, +/- 15um, +/- 0.10mm,
+Item Number,Material,Size (mm),Thickness (mm),Quality,Quantity,Price Each,Flatness,Roughness,TTV,Orientation,Thickness Tol,Dimension Tol,Grade
+B2222,Silicon,300mm,8,40/20,5,1.5, ,GA,,, +/- 5um, +/- 0.20mm,
+C3333,Silicon,200mm,7,40/20,10,5,3,1,2,SEMI Flat, +/- 25um, +/- 0.20mm,
+D4444,Silicon,300mm,6,40/20,20,10,,2,3,SEMI Notch, +/- 50um, +/- 0.20mm,
+E5555,Silicon,300mm,5,40/20,50,20,4,3,4,, +/- 20um, +/- 0.10mm,
+F6666,Silicon,200mm,4,40/20,100,40,5,,5,Notch, +/- 25um, +/- 0.20mm,UV
+G777,Silicon,300mm,2,40/20,500,50,,4,,, +/- 15um, +/- 0.10mm,

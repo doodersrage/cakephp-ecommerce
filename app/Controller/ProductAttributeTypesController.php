@@ -75,10 +75,16 @@ class ProductAttributeTypesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->ProductAttributeType->create();
 			if ($this->ProductAttributeType->save($this->request->data)) {
-				$this->Session->setFlash(__('The product attribute type has been saved.'));
+				$this->Session->setFlash(__('The product attribute type has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product attribute type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product attribute type could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		}
 	}
@@ -96,10 +102,16 @@ class ProductAttributeTypesController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->ProductAttributeType->save($this->request->data)) {
-				$this->Session->setFlash(__('The product attribute type has been saved.'));
+				$this->Session->setFlash(__('The product attribute type has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product attribute type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product attribute type could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		} else {
 			$options = array('conditions' => array('ProductAttributeType.' . $this->ProductAttributeType->primaryKey => $id));
@@ -121,9 +133,15 @@ class ProductAttributeTypesController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->ProductAttributeType->delete()) {
-			$this->Session->setFlash(__('The product attribute type has been deleted.'));
+			$this->Session->setFlash(__('The product attribute type has been deleted.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		} else {
-			$this->Session->setFlash(__('The product attribute type could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The product attribute type could not be deleted. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

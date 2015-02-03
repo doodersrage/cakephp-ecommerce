@@ -1,11 +1,43 @@
-<ul class="nav nav-pills">
-<? if (!isset($menus) || empty($menus)) :
+<? 
+if (!isset($menus) || empty($menus)) {
         $menus = $this->requestAction('/contents/menu');
-    endif; 
-    foreach($menus as $menu) : 
-?>
-    <li>
-    <?="<a href='".DS.'pages'.DS.$menu['Content']['sefURL']."'>".$menu['Content']['title']."</a>"; ?>
-    </li>
-<? endforeach; ?>
-</ul>
+	}; 
+	
+	echo '<ul class="nav nav-pills">';
+	foreach($menus as $idx => $mItm){
+		
+		if(isset($mItm['Content'])){
+			// gather link information
+			if($mItm['Content']['sefURL']){
+				$urlLnk = $mItm['Content']['sefURL'];
+			} else {
+				$urlLnk = $mItm['Content']['id'];
+			}
+			echo '<li><a href="'.DS.'pages'.DS.$urlLnk.'">'.$mItm['Content']['title'].'</a>';
+				child_check($idx,$menus);
+			echo '</li>';
+		}
+	}
+	echo '</ul>';
+	
+	function child_check($idx,$menus){
+		if(isset($menus[$idx]['children'])){
+
+			echo '<ul>';
+			foreach($menus[$idx]['children'] as $mItm){
+				
+				// gather link information
+				if($mItm['Content']['sefURL']){
+					$urlLnk = $mItm['Content']['sefURL'];
+				} else {
+					$urlLnk = $mItm['Content']['id'];
+				}
+				
+				echo '<li><a href="'.DS.'pages'.DS.$urlLnk.'">'.$mItm['Content']['title'].'</a>';
+					child_check($mItm['Content']['id'],$menus);
+				echo '</li>';
+			}
+			echo '</ul>';
+		}
+	}
+

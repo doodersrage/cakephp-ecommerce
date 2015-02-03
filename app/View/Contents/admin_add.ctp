@@ -1,4 +1,4 @@
-<div class="col-lg-9 contents form">
+<div class="col-lg-9 col-md-9 contents form">
 <?php echo $this->Form->create('Content', array('type'=>'file')); ?>
 	<fieldset>
 		<legend><?php echo __('Admin Add Page'); ?></legend>
@@ -7,6 +7,7 @@
 		echo $this->Form->input('title', array('label'=>'Page Title', 'class'=>'form-control',));
 		echo $this->Form->input('header', array('label'=>'Page Header', 'class'=>'form-control',));
 		echo $this->Wysiwyg->input('content', array('label'=>'Page Content', 'class'=>'form-control', 'id'=>'content'));
+		echo $this->Form->input('contactForm', array('label'=>'Display contact form?','class'=>'form-control',));
 		echo $this->Form->input('pageImage', array('label'=>'Page Image', 'type' => 'file', 'class'=>'form-control',));
 		?>
 		<h3><?php echo __('Product Information'); ?></h3>
@@ -30,7 +31,7 @@ echo $this->Form->submit('Submit',array(
                               'div' => false));
 echo $this->Form->end(); ?><br>
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 

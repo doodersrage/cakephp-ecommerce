@@ -1,4 +1,4 @@
-<div class="ocol-lg-9 rders form">
+<div class="ocol-lg-9 col-md-9 rders form">
 <?php echo $this->Form->create('Order'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Order'); ?></legend>
@@ -14,7 +14,7 @@
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 

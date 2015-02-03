@@ -1,4 +1,4 @@
-<div class="col-lg-9 products view">
+<div class="col-lg-9 col-md-9 products view">
 <h2><?php echo __('Product'); ?></h2>
 	<dl>
 		<dt><?php echo __('ItemNumber'); ?></dt>
@@ -32,7 +32,7 @@
 		?>
 	</dl>
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Edit Product'), array('action' => 'edit', $product['Product']['itemNumber']), array('class'=>'btn btn-primary')); ?> </li>

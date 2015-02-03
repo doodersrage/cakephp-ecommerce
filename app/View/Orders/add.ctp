@@ -1,4 +1,4 @@
-<div class="col-lg-9 orders form">
+<div class="col-lg-9 col-md-9 orders form">
 <?php echo $this->Form->create('Order'); ?>
 	<fieldset>
 		<legend><?php echo __('Add Order'); ?></legend>
@@ -13,7 +13,7 @@
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 

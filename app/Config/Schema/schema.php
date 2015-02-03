@@ -176,6 +176,11 @@ class AppSchema extends CakeSchema {
 	        	'null' => false, 
 	        	'length' => 10,
         	),
+	        'minQty' => array(
+	        	'type' => 'integer', 
+	        	'null' => false, 
+	        	'length' => 10,
+        	),
         	'prodType' => array(
 	        	'type' => 'string', 
 	        	'null' => false, 
@@ -206,6 +211,12 @@ class AppSchema extends CakeSchema {
         	),
         	'attributes' => array(
 	        	'type' => 'text', 
+	        	'null' => true,
+	        ),
+        	'custDimension' => array(
+	        	'type' => 'boolean', 
+				'length' => 1,
+			    'default' => 0,
 	        	'null' => true,
 	        ),
 	        'indexes' => array(
@@ -433,17 +444,17 @@ class AppSchema extends CakeSchema {
 	            'length' => 10,
 	            'key' => 'primary'
 	        ),
-	        'shipAddressId' => array(
-	            'type' => 'integer',
+	        'shipAddress' => array(
+	            'type' => 'text',
 	            'null' => false,
-	            'default' => null,
-	            'length' => 10,
 	        ),
-	        'billAddressId' => array(
-	            'type' => 'integer',
+	        'billAddress' => array(
+	            'type' => 'text',
 	            'null' => false,
-	            'default' => null,
-	            'length' => 10,
+	        ),
+	        'products' => array(
+	            'type' => 'text',
+	            'null' => false,
 	        ),
         	'subTotal' => array(
 	        	'type' => 'float', 
@@ -469,45 +480,5 @@ class AppSchema extends CakeSchema {
 		        'PRIMARY' => array('column' => 'id', 'unique' => true),
 		    ),
         );
-
-	public $orders_products = array(
-			'id' => array(
-	            'type' => 'integer',
-	            'null' => false,
-	            'default' => null,
-	            'length' => 10,
-	            'key' => 'primary'
-	        ),
-	        'orderId' => array(
-	            'type' => 'integer',
-	            'null' => false,
-	            'default' => null,
-	            'length' => 10,
-	        ),
-	        'productId' => array(
-	            'type' => 'integer',
-	            'null' => false,
-	            'default' => null,
-	            'length' => 10,
-	        ),
-	        'price' => array(
-	        	'type' => 'float', 
-	        	'null' => false, 
-	        	'length' => '10,2',
-        	),
-	        'quantity' => array(
-	        	'type' => 'integer', 
-	        	'null' => false, 
-	        	'length' => 10,
-        	),
-        	'total' => array(
-	        	'type' => 'float', 
-	        	'null' => false, 
-	        	'length' => '10,2',
-        	),
-			'indexes' => array(
-		        'PRIMARY' => array('column' => 'id', 'unique' => true),
-		    ),
-		);
 
 }

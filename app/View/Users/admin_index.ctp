@@ -1,4 +1,4 @@
-<div class="col-lg-9 users index">
+<div class="col-lg-9 col-md-9 users index">
 	<h2><?php echo __('Users'); ?></h2>
 	<div class="table-responsive">
 	<table class="table table-striped">
@@ -46,7 +46,7 @@
 	?>
 	</ul>
 </div>
-<div class="col-lg-3 sidebar actions">
+<div class="col-lg-3 col-md-3 sidebar actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add'),array('class'=>'btn btn-primary')); ?></li>

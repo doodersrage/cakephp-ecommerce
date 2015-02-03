@@ -1,4 +1,4 @@
-<div class="col-lg-9 productAttributes form">
+<div class="col-lg-9 col-md-9 productAttributes form">
 <?php echo $this->Form->create('ProductAttribute'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Product Attribute'); ?></legend>
@@ -16,7 +16,7 @@ echo $this->Form->submit('Submit',array(
 echo $this->Form->end(); ?><br>
 
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 

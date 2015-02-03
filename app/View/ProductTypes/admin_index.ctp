@@ -1,4 +1,4 @@
-<div class="col-lg-9 productTypes index">
+<div class="col-lg-9 col-md-9 productTypes index">
 	<h2><?php echo __('Product Types'); ?></h2>
 	<table class="table table-striped">
 	<thead>
@@ -36,7 +36,7 @@
 	?>
 	</ul>
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Product Type'), array('action' => 'add'),array('class'=>'btn btn-primary')); ?></li>

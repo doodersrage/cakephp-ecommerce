@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>
-		BoostCake -
+		Custom Glass and Silicon -
 		<?php echo $title_for_layout; ?>
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,7 +76,7 @@
 							)); ?></li>
 						</ul>
 					</li>
-					<li class="dropdown">
+					<!--<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
 					      Products <span class="caret"></span>
 					    </a>
@@ -89,16 +89,8 @@
 								'controller' => 'products',
 								'action' => 'add'
 							)); ?></li>
-							<li><?php echo $this->Html->link('Update with CSV', array(
-								'controller' => 'products',
-								'action' => 'updatecsv'
-							)); ?></li>
-							<li><?php echo $this->Html->link('Remove with CSV', array(
-								'controller' => 'products',
-								'action' => 'removecsv'
-							)); ?></li>
 						</ul>
-					</li>
+					</li>-->
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
 					      Product Attributes <span class="caret"></span>
@@ -169,7 +161,7 @@
 					    </a>
 						<ul class="dropdown-menu">
 							<li><?php echo $this->Html->link('List', array(
-								'controller' => 'productAttributes',
+								'controller' => 'orders',
 								'action' => 'index'
 							)); ?></li>
 						</ul>
@@ -184,7 +176,10 @@
 			<?php endif; ?>
 		</div>
 	</nav>
-
+<?php
+// flash warning message
+echo $this->Session->flash();
+?>
 	<div class="container">
 
 		<?php echo $this->fetch('content'); ?>
@@ -196,7 +191,14 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-	<?php //echo $this->fetch('script'); ?>
+	<?php //echo $this->fetch('script'); 
+	if(isset($jsIncludes)){
+		foreach($jsIncludes as $js){
+			echo $this->Html->script($js);
+		}
+	}
+
+?>
 
 </body>
 </html>

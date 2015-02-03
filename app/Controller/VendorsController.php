@@ -75,10 +75,16 @@ class VendorsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Vendor->create();
 			if ($this->Vendor->save($this->request->data)) {
-				$this->Session->setFlash(__('The vendor has been saved.'));
+				$this->Session->setFlash(__('The vendor has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The vendor could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The vendor could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		}
 	}
@@ -96,10 +102,16 @@ class VendorsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Vendor->save($this->request->data)) {
-				$this->Session->setFlash(__('The vendor has been saved.'));
+				$this->Session->setFlash(__('The vendor has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The vendor could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The vendor could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		} else {
 			$options = array('conditions' => array('Vendor.' . $this->Vendor->primaryKey => $id));
@@ -121,9 +133,15 @@ class VendorsController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Vendor->delete()) {
-			$this->Session->setFlash(__('The vendor has been deleted.'));
+			$this->Session->setFlash(__('The vendor has been deleted.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		} else {
-			$this->Session->setFlash(__('The vendor could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The vendor could not be deleted. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

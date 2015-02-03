@@ -75,10 +75,16 @@ class ProductAttributesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->ProductAttribute->create();
 			if ($this->ProductAttribute->save($this->request->data)) {
-				$this->Session->setFlash(__('The product attribute has been saved.'));
+				$this->Session->setFlash(__('The product attribute has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product attribute could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product attribute could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		}
 	}
@@ -96,10 +102,16 @@ class ProductAttributesController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->ProductAttribute->save($this->request->data)) {
-				$this->Session->setFlash(__('The product attribute has been saved.'));
+				$this->Session->setFlash(__('The product attribute has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product attribute could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product attribute could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		} else {
 			$options = array('conditions' => array('ProductAttribute.' . $this->ProductAttribute->primaryKey => $id));
@@ -121,9 +133,15 @@ class ProductAttributesController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->ProductAttribute->delete()) {
-			$this->Session->setFlash(__('The product attribute has been deleted.'));
+			$this->Session->setFlash(__('The product attribute has been deleted.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		} else {
-			$this->Session->setFlash(__('The product attribute could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The product attribute could not be deleted. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

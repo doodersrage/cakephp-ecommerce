@@ -1,0 +1,7 @@
+Item Number,Material,Size (MM),Thickness (MM),Quality,Flatness,Quantity,Price Each,Flatness,Roughness,TTV,Edge,Orientation
+EXG76.2-0.3,76.2,100,0.3,60/40,2um,12,$10.00 ,20um,,2um,Hand Seam,Notch
+,76.2,200,0.3,5/2,5um,76,$8.00 ,,3A,5um,,
+,76.2,200,0.3,10/5, ,35,$6.40 ,5um,,,CNC ,Flat
+,76.2,150,0.3,20/10, ,110,$7.30 ,2um,2A,,Water Jet,
+EXG76.2-0.5,76.2,100,0.5,60/40,10um,400,$8.30 ,,10A,10um,Hand Seam,Flat
+,76.2,300,0.5,40/20, ,20,$9.60 ,,5A,,CNC,Notch

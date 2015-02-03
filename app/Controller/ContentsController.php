@@ -11,7 +11,7 @@ class ContentsController extends AppController {
 
 	public $helpers = array(
         'Wysiwyg.Wysiwyg' => array(
-            '_editor' => 'Tinymce',
+            'editor' => 'Tinymce',
             'theme_advanced_toolbar_align' => 'right',
         )
     );
@@ -51,12 +51,14 @@ class ContentsController extends AppController {
 
 			// if SEF page url assigned look up and load page
 			if (!empty($path[0])) {
+				
 				// if supplied value is an integer searvh for page by index value
-				if(is_int($path[0])){
+				if(is_numeric($path[0])){
+
 					if (!$this->Content->exists($path[0])) {
 						throw new NotFoundException(__('Invalid content'));
 					}
-					$options = array('conditions' => array('Content.' . $this->Content->primaryKey => $id));
+					$options = array('conditions' => array('Content.' . $this->Content->primaryKey => $path[0]));
 					$content = $this->Content->find('first', $options);
 					if($content){
 						// set page title
@@ -91,6 +93,41 @@ class ContentsController extends AppController {
 						throw new NotFoundException(__('Invalid content'));
 					}
 				}
+					
+				// if home page change to static home page view
+				if($path[0] == 'home'){
+					$this->set('jsIncludes',array('home'));  
+					$this->render('home');
+				}
+				
+				// send email on contact form submission
+				if ($this->request->is('post') && isset($this->request->data['Contact']['message'])) {
+					if(!empty($this->request->data['Contact']['message']) && !empty($this->request->data['Contact']['name']) && !empty($this->request->data['Contact']['email'])){
+				
+					// send out order emails
+					App::uses('CakeEmail', 'Network/Email');
+												
+					$Email = new CakeEmail();
+					$Email->template('contact', 'default');
+					$Email->viewVars(array(
+						'email' => $this->request->data['Contact']['email'],
+						'name' => $this->request->data['Contact']['name'],
+						'message' => $this->request->data['Contact']['message'],
+					));
+					$Email->to('ralston@coresix.com','rob@studiocenter.com');
+					$Email->emailFormat('html');
+					$Email->subject('CGS Contact Form Submission');
+					$Email->replyTo($this->request->data['Contact']['email']);
+					$Email->from ($this->request->data['Contact']['email']);
+					$Email->send();
+					
+					} else {
+						$this->Session->setFlash(__('Name, email, or message fields are not populated. Please fill out all required fields!'), 'alert', array(
+							'plugin' => 'BoostCake',
+							'class' => 'alert-warning'
+						));
+					}
+				}
 			} else {
 				throw new NotFoundException(__('Invalid content'));
 			}
@@ -105,8 +142,9 @@ class ContentsController extends AppController {
 		$this->loadModel('Product');
 
 		// load products data
-		$options = array('conditions' => array('Product.contentId' => $idx));
-		$products = $this->Product->find('all', $options);
+		$options = array('conditions' => array('Product.contentId' => $idx), 'limit' => 20,'order' => array('Product.sort' => 'asc'),);
+		$this->Paginator->settings = $options;
+		$products = $this->Paginator->paginate('Product');
 
 		// continue loading attribute if products have been found
 		if($products){
@@ -171,22 +209,95 @@ class ContentsController extends AppController {
 	    fclose($handle);
 	    return  $linecount;     
 	}
+	
+	// delete all selected products
+	public function delete_products($id = null){
+		
+        // load needed data models
+		$this->loadModel('ProductAttribute');
+		$this->loadModel('ProductAttributeType');
+		$this->loadModel('ProductType');
+		$this->loadModel('Product');
+		
+		// load content data
+		$options = array('conditions' => array('Content.' . $this->Content->primaryKey => $id));
+		$content = $this->Content->find('first', $options);
 
+		$options = array('conditions' => array(
+											'Product.contentId' => $id,
+											'Product.prodType' => $content['Content']['productListType'],
+											));
+		$products = $this->Product->find('all', $options);
+
+		// delete all product attributes
+		foreach($products as $product){
+			$this->ProductAttribute->deleteAll(array('ProductAttribute.itemNumber' => $product['Product']['itemNumber']), false);
+		}
+		
+		// delete all products assigned to content
+		$this->Product->deleteAll(array('Product.contentId' => $id), false);
+
+	}
+	
+	// AJAX call to delete all products from page
+	public function admin_delete_products($id = null){
+		// disable layout and view
+		$this->autoRender = false;
+		
+		// gather selected content id
+		$id = $this->request->data('id');
+		
+		// check for existing content
+		if (!$this->Content->exists($id)) {
+			throw new NotFoundException(__('Invalid content'));
+		}
+		
+		// delete products
+		$this->delete_products($id);
+		
+		echo 'Products deleted!';
+	}
+	
 	// AJAX call for importing products through assigned CSV
 	public function admin_import_products($id = null){
 		ini_set('auto_detect_line_endings', true);
 		// disable layout and view
 		$this->autoRender = false;
+
+        // load needed data models
+		$this->loadModel('ProductAttribute');
+		$this->loadModel('ProductAttributeType');
+		$this->loadModel('ProductType');
+		$this->loadModel('Product');
+		
+		// gather selected content id
 		$id = $this->request->data('id');
+
+		// delete existing products value
+		$replProds = $this->request->data('replProds');
 
 		// check for existing content
 		if (!$this->Content->exists($id)) {
 			throw new NotFoundException(__('Invalid content'));
 		}
+		
+		// delete current products if selected
+		if($replProds == true){
+			// delete products
+			$this->delete_products($id);
+		}
 
 		// load content data
 		$options = array('conditions' => array('Content.' . $this->Content->primaryKey => $id));
 		$content = $this->Content->find('first', $options);
+		
+		// check for column in attributes
+		$prodType = $this->ProductType->find('first', array(
+			'conditions' => array('ProductType.id' => $content['Content']['productListType'] )
+		));
+		
+		// gather available price tiers
+		$tieredPricing = unserialize($prodType['ProductType']['tieredPricing']);
 
 		// check for existing csv file for selected content
 		if(!$content['Content']['csvFile']){
@@ -201,16 +312,16 @@ class ContentsController extends AppController {
 
         // gather process information for indicator
         $csvLineCnt = $this->getLines($filename);
-
-        // load needed data models
-		$this->loadModel('ProductAttribute');
-		$this->loadModel('ProductAttributeType');
-		$this->loadModel('ProductType');
-		$this->loadModel('Product');
-        
+		
+		// assign static column names to array
+		$staticColumns = array('Item Number','Quantity','Price Each','Min Quantity','Full Length','Full Width','Ship QTY Inc','Ship Inc Cost');
+       
         // read each data row in the file
         $i = 0;
+		$skipped = 0;
         $attrTypesArr = array();
+		$staticTypesArr = array();
+		$priceClms = array();
         while (($row = fgetcsv($handle)) !== FALSE) {
         	// gather CSV headers
         	if($i === 0){
@@ -224,71 +335,136 @@ class ContentsController extends AppController {
         			// store found product attribute types into an two dimensional array
 				    if($prodAttr) {
 				    	$attrTypesArr[$idx] = array(trim($clm),$prodAttr['ProductAttributeType']['id']);
+						continue;
 				    }
+					
+					// check for static columns
+					foreach($staticColumns as $sid => $staticColumn){
+						if(strtoupper(trim($staticColumn)) == strtoupper(trim($clm))){
+							$staticTypesArr[$staticColumn] = array(trim($sid), $idx);
+						}
+					}
+					
+					// check for assigned pricing tiers then gather data from submitted CSV
+					if(!empty($tieredPricing)){
+						// iterate through assigned tiered pricing
+						foreach($tieredPricing as $tpidx => $price){
+							// store found columns
+							if(strtoupper($price[1]) != '' && strtoupper($price[1]) == strtoupper(trim($clm))){
+								$priceClms[$idx] = array(trim($clm),$tpidx,$price[0]);
+							}
+						}
+					}
+				}
+        	} else {						
+				
+				// store non-attribute data for easy access
+				// if any one of the three values are not assigned for a single product skip inserting entire product
+				if(isset($staticTypesArr['Item Number'])){
+					$itemNumber = $row[$staticTypesArr['Item Number'][1]];
+				} else {
+					++$skipped;
+					continue;
+				}
+				if(isset($staticTypesArr['Quantity'])){
+					$quantity = $row[$staticTypesArr['Quantity'][1]];
+				} else {
+					$quantity = 0;
+				}
+				if(isset($staticTypesArr['Price Each'])){
+					$priceEach = floatval(preg_replace('/[^\d\.]/', '', $row[$staticTypesArr['Price Each'][1]]));
+				} else {
+					++$skipped;
+					continue;
+				}
+				
+				$newProduct = array(
+									'itemNumber' => $itemNumber,
+									'price' => $priceEach,
+									'quantity' => $quantity,
+									'prodType' => $content['Content']['productListType'],
+									'contentId' => $content['Content']['id'],
+								);
+				
+				// add other static property values
+				if(isset($staticTypesArr['Min Quantity'])){
+					$newProduct['minQty'] = $row[$staticTypesArr['Min Quantity'][1]];
+				}
+				
+				// add other static property values
+				if(isset($staticTypesArr['Full Length'])){
+					$newProduct['fullLength'] = $row[$staticTypesArr['Full Length'][1]];
+				}
 
-        		}
-        	} else {
+				// add other static property values
+				if(isset($staticTypesArr['Full Width'])){
+					$newProduct['fullWidth'] = $row[$staticTypesArr['Full Width'][1]];
+				}
 
-	        	// perform product additions based on assigned page product type
-	        	switch($content['Content']['productListType']){
-	        		case 1:
+				// add other static property values
+				if(isset($staticTypesArr['Ship QTY Inc'])){
+					$newProduct['shipIncQty'] = $row[$staticTypesArr['Ship QTY Inc'][1]];
+				}
 
-	        			// store non-attribute data for easy access
-	        			$itemNumber = trim($row[0]);
-	        			$quantity = trim($row[5]);
-	        			$priceEach = trim($row[6]);
+				// add other static property values
+				if(isset($staticTypesArr['Ship Inc Cost'])){
+					$newProduct['shipIncCost'] = $row[$staticTypesArr['Ship Inc Cost'][1]];
+				}
+				
+				// check for assigned pricing tiers then gather data from submitted CSV
+				$priceClmsData = array();
+				if(count($priceClms) > 0){
+					foreach($priceClms as $idx => $price){
+					  	if(!empty($row[$idx])){
+							$priceClmsData[$price[2]] = floatval(preg_replace('/[^\d\.]/', '', trim($row[$idx])));
+						}
+					}
+					$newProduct['tieredPricing'] = serialize($priceClmsData);
+				}
 
-	        			// save product to database
-	        			$options = array('conditions' => array(
-        													'Product.itemNumber' => $itemNumber, 
-        													));
-						$product = $this->Product->find('first', $options);
-						if(!$product){
-        					$this->Product->create();
-        				} else {
-        					$this->Product->itemNumber = $itemNumber;
-        				}
-		                $this->Product->save(
-		                    array(
-	                        	'itemNumber' => $itemNumber,
-	                        	'price' => $priceEach,
-	                        	'quantity' => $quantity,
-	                        	'prodType' => $content['Content']['productListType'],
-	                        	'contentId' => $content['Content']['id'],
-		                    )
-		                );
-		                $this->Product->clear();
+				// save product to database
+				$options = array('conditions' => array(
+													'Product.itemNumber' => $itemNumber, 
+													));
+				$product = $this->Product->find('first', $options);
+				if(!$product){
+					$this->Product->create();
+				} else {
+					$this->Product->itemNumber = $itemNumber;
+				}
+				$this->Product->save($newProduct);
+				$this->Product->clear();
+				
+				//$log = $this->Product->getDataSource()->getLog(false, false);
+				//print_r($log);
 
-		                // assign product attributes
-		                foreach($attrTypesArr as $idx => $val){
-		                	
-		                	// gather selected attribute data
-		                	$attributeVal = trim($row[$idx]);
+				// assign product attributes
+				foreach($attrTypesArr as $idx => $val){
+					
+					// gather selected attribute data
+					$attributeVal = trim($row[$idx]);
 
-		        			// save attribute to database
-		        			$options = array('conditions' => array(
-	        													'ProductAttribute.attributeId' => $val[1], 
-	        													'ProductAttribute.itemNumber' => $itemNumber,
-	        													));
-							$attribute = $this->ProductAttribute->find('first', $options);
-							if(!$attribute){
-			        			$this->ProductAttribute->create();
-			            	} else {
-			            		$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
-			            	}
-			                $this->ProductAttribute->save(
-			                    array(
-		                        	'attributeId' => $val[1],
-		                        	'itemNumber' => $itemNumber,
-		                        	'content' => $attributeVal,
-			                    )
-			                );
-			                $this->ProductAttribute->clear();
+					// save attribute to database
+					$options = array('conditions' => array(
+														'ProductAttribute.attributeId' => $val[1], 
+														'ProductAttribute.itemNumber' => $itemNumber,
+														));
+					$attribute = $this->ProductAttribute->find('first', $options);
+					if(!$attribute){
+						$this->ProductAttribute->create();
+					} else {
+						$this->ProductAttribute->id = $attribute['ProductAttribute']['id'];
+					}
+					$this->ProductAttribute->save(
+						array(
+							'attributeId' => $val[1],
+							'itemNumber' => $itemNumber,
+							'content' => $attributeVal,
+						)
+					);
+					$this->ProductAttribute->clear();
 
-		                }
-
-	        		break;
-	        	}
+				}
 
         	}
 
@@ -297,7 +473,7 @@ class ContentsController extends AppController {
 
         fclose($handle);
 
-        echo $csvLineCnt." Lines read and products imported!";
+        echo $csvLineCnt.' Lines read and products imported! '.$skipped.' products skipped!';
 
 	}
 
@@ -360,13 +536,9 @@ class ContentsController extends AppController {
 	public function admin_add() {
 
 		// gather list of available content pages
-		$this->loadModel('Content');
-		$contents = $this->Content->find('all');
-		$contArr = array();
-		foreach($contents as $page){
-			$contArr[$page['Content']['id']] = $page['Content']['title'];
-		}
-		$this->set('contents',$contArr);
+		$this->menu();
+		$this->gen_mnu_opts();
+		$this->set('contents',$this->navOpts);
 
 		// gather list of available vendors
 		$this->loadModel('Vendor');
@@ -393,10 +565,16 @@ class ContentsController extends AppController {
 			$this->Content->create();
 
 			if ($this->Content->save($this->request->data)) {
-				$this->Session->setFlash(__('The content has been saved.'));
+				$this->Session->setFlash(__('The content has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The content could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The content could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		}
 	}
@@ -420,31 +598,47 @@ class ContentsController extends AppController {
 			$this->uploadFile('csvFile');
 
 			// overide blank values if existing values are found
-			if($data['Content']['pageImage'])
-			{
-				$this->request->data['Content']['pageImage'] = $data['Content']['pageImage'];
+			if($this->request->data('delImage')  != 1){
+				if($data['Content']['pageImage'] && empty($this->request->data['Content']['pageImage']['tmp_name']))
+				{
+					$this->request->data['Content']['pageImage'] = $data['Content']['pageImage'];
+				}
+			} else {
+				// delete image from filesystem
+				$filename = WWW_ROOT . $this->uploadDir . DS . $data['Content']['pageImage'];
+				unlink($filename);
 			}
-			if($data['Content']['csvFile'])
-			{
-				$this->request->data['Content']['csvFile'] = $data['Content']['csvFile'];
+			if($this->request->data('delCSV')  != 1){
+				if($data['Content']['csvFile'] && empty($this->request->data['Content']['csvFile']['tmp_name']))
+				{
+					$this->request->data['Content']['csvFile'] = $data['Content']['csvFile'];
+				}
+			} else {
+				// delete image from filesystem
+				$filename = WWW_ROOT . $this->uploadDir . DS . $data['Content']['csvFile'];
+				unlink($filename);
+				// delete products
+				$this->delete_products($id);
 			}
 
 			if ($this->Content->save($this->request->data)) {
-				$this->Session->setFlash(__('The content has been saved.'));
+				$this->Session->setFlash(__('The content has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The content could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The content could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		} else {
-
-			// gather list of available content pages
-			$this->loadModel('Content');
-			$contents = $this->Content->find('all');
-			$contArr = array();
-			foreach($contents as $page){
-				$contArr[$page['Content']['id']] = $page['Content']['title'];
-			}
-			$this->set('contents',$contArr);
+			
+			// generate menu selection
+			$this->menu();
+			$this->gen_mnu_opts();
+			$this->set('contents',$this->navOpts);
 
 			// gather list of available vendors
 			$this->loadModel('Vendor');
@@ -469,6 +663,27 @@ class ContentsController extends AppController {
 			$this->request->data = $this->Content->find('first', $options);
 		}
 	}
+	
+	// gather page options
+	public $navOpts;
+	private function gen_mnu_opts(){
+		foreach($this->topNav as $idx => $mItm){
+			if(isset($mItm['Content'])){
+				$this->navOpts[$mItm['Content']['id']] = $mItm['Content']['title'];
+				$this->gen_mnu_child_opts($idx);
+			}
+		}
+
+	}
+	private function gen_mnu_child_opts($idx,$sep = '-'){
+		if(isset($this->topNav[$idx]['children'])){
+			$sep = $sep . '-';
+			foreach($this->topNav[$idx]['children'] as $mItm){
+				$this->navOpts[$mItm['Content']['id']] = $sep.' '.$mItm['Content']['title'];
+				$this->gen_mnu_child_opts($mItm['Content']['id'],$sep);
+			}
+		}
+	}
 
 /**
  * admin_delete method
@@ -485,40 +700,49 @@ class ContentsController extends AppController {
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Content->delete()) {
 
-			// delete assigned products and attributes
-			$this->loadModel('Product');
-			$this->loadModel('ProductAttribute');
+			// delete products
+			$this->delete_products($id);
 
-			$options = array('conditions' => array(
-												'Product.contentId' => $id,
-												));
-			$products = $this->Product->find('all', $options);
-
-			// delete all product attributes
-			foreach($products as $product){
-				$this->ProductAttribute->deleteAll(array('ProductAttribute.itemNumber' => $product['Product']['itemNumber']), false);
-			}
-
-			// delete all products
-			$this->Product->deleteAll(array('Product.contentId' => $id), false);
-
-			$this->Session->setFlash(__('The content has been deleted.'));
+			$this->Session->setFlash(__('The content has been deleted.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		} else {
-			$this->Session->setFlash(__('The content could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The content could not be deleted. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
-
-// front end tasks
-// generate menu values from found pages
-public function menu() {
-    if (isset($this->params['requested']) && $this->params['requested'] == true) {
-        $menus = $this->Content->find('all', array('order' => array('sortOrder Desc', 'title ASC') ));
-        return $menus;
-    } else {
-        $this->set('menus', $this->Content->find('all', array('order' => array('sortOrder Desc', 'title ASC') )));
-    }
-}
+	
+	// front end tasks
+	// generate menu values from found pages
+	public $topNav;
+	public function menu() {
+			$contents = $this->Content->find('all', array('conditions' => array('Content.parentId' => 0), 'order' => array('sortOrder Desc', 'title ASC') ));
+			
+			// discover child pages
+			foreach($contents as $content){
+				$this->topNav[$content['Content']['id']] = $content;
+				$this->gatherPageLinks($content['Content']['id']);
+			}
+	
+			return $menus = $this->topNav;
+	}
+	
+	private function gatherPageLinks($parentId){
+		$contents = $this->Content->find('all', array('conditions' => array('Content.parentId' => $parentId), 'order' => array('sortOrder Desc', 'title ASC') ));
+		
+		// save found child pages
+		if($contents){
+			$this->topNav[$parentId]['children'] = $contents;
+			// walk through children checking for more
+			foreach($contents as $content){
+				$this->gatherPageLinks($content['Content']['id']);
+			}
+		}
+	}
 
 /**
  * view method

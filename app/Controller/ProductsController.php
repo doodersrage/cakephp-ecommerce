@@ -164,10 +164,16 @@ class ProductsController extends AppController {
 
 				}
 
-				$this->Session->setFlash(__('The product has been saved.'));
+				$this->Session->setFlash(__('The product has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		}
 	}
@@ -250,10 +256,16 @@ class ProductsController extends AppController {
 
 				}
 
-				$this->Session->setFlash(__('The product has been saved.'));
+				$this->Session->setFlash(__('The product has been saved.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product could not be saved. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 			}
 		} else {
 			$options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
@@ -329,9 +341,15 @@ class ProductsController extends AppController {
 
 			$this->ProductAttribute->deleteAll(array('ProductAttribute.itemNumber' => $id), false);
 
-			$this->Session->setFlash(__('The product has been deleted.'));
+			$this->Session->setFlash(__('The product has been deleted.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		} else {
-			$this->Session->setFlash(__('The product could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The product could not be deleted. Please, try again.'), 'alert', array(
+				'plugin' => 'BoostCake',
+				'class' => 'alert-warning'
+			));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

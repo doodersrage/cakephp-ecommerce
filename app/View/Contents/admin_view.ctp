@@ -1,4 +1,4 @@
-<div class="col-lg-9 contents view">
+<div class="col-lg-9 col-md-9 contents view">
 <h2><?php echo __('Page'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
@@ -53,7 +53,7 @@
 		</dd>
 	</dl>
 </div>
-<div class="col-lg-3 actions">
+<div class="col-lg-3 col-md-3 actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Edit Content'), array('action' => 'edit', $content['Content']['id']), array('class'=>'btn btn-primary')); ?> </li>

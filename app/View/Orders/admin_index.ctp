@@ -1,12 +1,12 @@
-<div class="col-lg-9 orders index">
+<div class="col-lg-9 col-md-9 orders index">
 	<h2><?php echo __('Orders'); ?></h2>
 	<div class="table-responsive">
 	<table class="table table-striped">
 	<thead>
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('shipAddressId'); ?></th>
-			<th><?php echo $this->Paginator->sort('billAddressId'); ?></th>
+			<th><?php echo $this->Paginator->sort('billAddress'); ?></th>
+			<th><?php echo $this->Paginator->sort('shipAddress'); ?></th>
 			<th><?php echo $this->Paginator->sort('subTotal'); ?></th>
 			<th><?php echo $this->Paginator->sort('tax'); ?></th>
 			<th><?php echo $this->Paginator->sort('shipping'); ?></th>
@@ -18,15 +18,49 @@
 	<?php foreach ($orders as $order): ?>
 	<tr>
 		<td><?php echo h($order['Order']['id']); ?>&nbsp;</td>
-		<td><?php echo h($order['Order']['shipAddressId']); ?>&nbsp;</td>
-		<td><?php echo h($order['Order']['billAddressId']); ?>&nbsp;</td>
-		<td><?php echo h($order['Order']['subTotal']); ?>&nbsp;</td>
-		<td><?php echo h($order['Order']['tax']); ?>&nbsp;</td>
-		<td><?php echo h($order['Order']['shipping']); ?>&nbsp;</td>
-		<td><?php echo h($order['Order']['total']); ?>&nbsp;</td>
+		<td><?php 
+				$billAddress = unserialize($order['Order']['billAddress']);
+				echo 'Email: '.$billAddress['email'].'<br>';
+				echo 'First Name: '.$billAddress['firstName'].'<br>';
+				echo 'Last Name: '.$billAddress['lastName'].'<br>';
+				echo 'Company: '.$billAddress['company'].'<br>';
+				echo 'Telephone: '.$billAddress['telephone'].'<br>';
+				if(!empty($billAddress['fax'])){
+					echo 'Fax: '.$billAddress['fax'].'<br>';
+				}
+				echo 'Address: '.$billAddress['address'].'<br>';
+				if(!empty($billAddress['address2'])){
+					echo 'Address2: '.$billAddress['address2'].'<br>';
+				}
+				echo 'City: '.$billAddress['city'].'<br>';
+				echo 'State: '.$billAddress['state'].'<br>';
+				echo 'Zip: '.$billAddress['postalCode'];
+		?></td>
+		<td><?php $shipAddress = unserialize($order['Order']['shipAddress']);
+				echo 'Email: '.$shipAddress['shipEmail'].'<br>';
+				echo 'First Name: '.$shipAddress['shipFirstName'].'<br>';
+				echo 'Last Name: '.$shipAddress['shipLastName'].'<br>';
+				echo 'Company: '.$shipAddress['shipCompany'].'<br>';
+				echo 'Telephone: '.$shipAddress['shipTelephone'].'<br>';
+				if(!empty($shipAddress['shipFax'])){
+					echo 'Fax: '.$shipAddress['shipFax'].'<br>';
+				}
+				echo 'Address: '.$shipAddress['shipAddress'].'<br>';
+				if(!empty($shipAddress['shipAddress2'])){
+					echo 'Address2: '.$shipAddress['shipAddress2'].'<br>';
+				}
+				echo 'City: '.$shipAddress['shipCity'].'<br>';
+				echo 'State: '.$shipAddress['shipState'].'<br>';
+				echo 'Zip: '.$shipAddress['shipPostalCode'];
+		 ?>
+        </td>
+		<td>$<?php echo number_format($order['Order']['subTotal'],2,'.',','); ?>&nbsp;</td>
+		<td>$<?php echo number_format($order['Order']['tax'],2,'.',','); ?>&nbsp;</td>
+		<td>$<?php $shipping = unserialize($order['Order']['shipping']); 
+				if(!empty($shipping['total'])){ echo number_format($shipping['total'],2,'.',','); }else{ echo 0.00; } ?>&nbsp;</td>
+		<td>$<?php echo number_format($order['Order']['total'],2,'.',','); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $order['Order']['id']), array('class'=>'btn btn-primary')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $order['Order']['id']), array('class'=>'btn btn-primary')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $order['Order']['id']), array('class'=>'btn btn-primary'), __('Are you sure you want to delete # %s?', $order['Order']['id'])); ?>
 		</td>
 	</tr>
@@ -48,9 +82,6 @@
 	?>
 	</ul>
 </div>
-<div class="col-lg-6 sidebar actions">
+<div class="col-lg-3 col-md-3 sidebar actions">
 	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Order'), array('action' => 'add'),array('class'=>'btn btn-primary')); ?></li>
-	</ul>
 </div>
