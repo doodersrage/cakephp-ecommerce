@@ -161,10 +161,14 @@ class OrdersController extends AppController {
 		$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 		$order = $this->Order->find('first', $options);
 		
+		//$this->request->data = $order;
+		
 		// update existing order data on submission
-		if ($this->request->is('post')) {
+		if ($this->request->is(array('post', 'put'))) {
+
 			// test submitted order data
 			//print_r($this->request->data);
+			//echo $this->request->data['Order']['notifyCustomer'];
 			
 			// load order products
 			$products = unserialize($order['Order']['products']);
@@ -173,6 +177,7 @@ class OrdersController extends AppController {
 			$shipping = unserialize($order['Order']['shipping']);
 			
 			$shipTotal = 0;
+
 			// walk through all order products
 			foreach($products as $idx => $val){
 				
@@ -195,27 +200,27 @@ class OrdersController extends AppController {
 			$order['Order']['total'] = $order['Order']['subTotal'] + $shipTotal;
 			
 			// set order specific values
-			$order['Order']['notes'] = $this->request->data['notes'];
-			$order['Order']['status'] = $this->request->data['status'];
+			$order['Order']['notes'] = $this->request->data['Order']['notes'];
+			$order['Order']['status'] = $this->request->data['Order']['status'];
 			
 			// save updated order data
 			$this->Order->save($order);
 			
 			// notify customer if selected
-			if($this->request->data['notifyCustomer'] === 1){
+			if($this->request->data['Order']['notifyCustomer'] == 1){
 				$billing = unserialize($order['Order']['billAddress']);
 
 				// send out order emails
 				App::uses('CakeEmail', 'Network/Email');
 											
 				$Email = new CakeEmail();
-				$Email->template('invoice', 'default');
+				$Email->template('invoiceadmin', 'default');
 				$Email->viewVars(array('order' => $order));
 				$Email->to($billing['email']);
 				$Email->emailFormat('html');
-				$Email->subject('CGS Order Update');
-				$Email->replyTo('noreply@cgs.com');
-				$Email->from ('noreply@cgs.com');
+				$Email->subject('CGO Order Update Status '.$this->request->data['Order']['status']);
+				$Email->replyTo('sales@customglassandoptics.com');
+				$Email->from ('sales@customglassandoptics.com');
 				$Email->send();
 
 			}

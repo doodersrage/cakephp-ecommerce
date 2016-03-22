@@ -88,6 +88,10 @@ ul.nav li:hover > ul {
 .home .info-blocks .col-lg-4 {
 	position: relative;
 }
+/* forms */
+input[type="text"],input[type="email"],input[type="tel"],textarea{
+	color:#000;
+}
 /* buttons */
 input[type="submit"] {
 	text-transform: uppercase;

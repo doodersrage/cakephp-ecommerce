@@ -11,6 +11,7 @@
 			<th><?php echo $this->Paginator->sort('tax'); ?></th>
 			<th><?php echo $this->Paginator->sort('shipping'); ?></th>
 			<th><?php echo $this->Paginator->sort('total'); ?></th>
+			<th><?php echo $this->Paginator->sort('date/time'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	</thead>
@@ -59,6 +60,7 @@
 		<td>$<?php $shipping = unserialize($order['Order']['shipping']); 
 				if(!empty($shipping['total'])){ echo number_format($shipping['total'],2,'.',','); }else{ echo 0.00; } ?>&nbsp;</td>
 		<td>$<?php echo number_format($order['Order']['total'],2,'.',','); ?>&nbsp;</td>
+		<td><?php echo date("F j, Y, g:i a",strtotime($order['Order']['dateOrdered'])); ?></td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $order['Order']['id']), array('class'=>'btn btn-primary')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $order['Order']['id']), array('class'=>'btn btn-primary'), __('Are you sure you want to delete # %s?', $order['Order']['id'])); ?>

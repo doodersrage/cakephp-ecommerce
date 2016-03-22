@@ -3,23 +3,26 @@
 <head>
 	<meta charset="utf-8">
 	<title>
-		Custom Glass and Silicon -
+		Custom Glass and Optics -
 		<?php echo $title_for_layout; ?>
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
+	<meta name="description" content="<?php echo $description_for_layout; ?>">
 	<meta name="author" content="">
 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
-        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-        e.src='//www.google-analytics.com/analytics.js';
-        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-        ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-60835000-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <meta name="google-site-verification" content="VIavwIBDTbJZXJNtq1syjce3HI5TX0CI6Qa6_pt1dKs" />
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -39,11 +42,11 @@
 
         <div class="container">
             <div class="row header">
-                        <a title="custom silicon and glass logo image" href="/"><?php echo $this->Html->image('cgs-logo.png',array('id'=>'logo','alt'=>'custom silicon and glass logo image')); ?></a>
+                        <a title="custom glass and optics logo image" href="/"><?php echo $this->Html->image('cgs-logo.png',array('id'=>'logo','alt'=>'custom silicon and glass logo image')); ?></a>
                 <div class="row">
                     <div class="col-lg-12 head-contact">
-                        <p>757.888.1361<br>
-                        <a style="color:#fff" href="mailto:INFO@COMPANYNAME.COM">INFO@COMPANYNAME.COM</a></p>
+                        <p>757.880.9543<br>
+                        <a style="color:#fff;text-transform:uppercase" href="mailto:sales@customglassandoptics.com">sales@customglassandoptics.com</a></p>
                         <?php
 						$cart = $this->Session->read('User.Cart');
 						if(!empty($cart)){
@@ -85,9 +88,9 @@
 			echo $this->fetch('content'); ?>
             
             <div class="footer">
-                <p>&copy; Copyright <?php echo date('Y'); ?> Custom Glass and Silicon. All Rights Reserved.</p>
+                <p>&copy; Copyright <?php echo date('Y'); ?> Custom Glass and Optics. All Rights Reserved. | <a href="https://customglassandoptics.com/pages/terms-conditions">Terms and Conditions</a></p>
             </div>
-
+<!-- (c) 2005, 2015. Authorize.Net is a registered trademark of CyberSource Corporation --> <div style="bottom:0;position:fixed;_position:absolute;left:0;" class="AuthorizeNetSeal"> <script type="text/javascript" language="javascript">var ANS_customer_id="1f9e9edc-12d2-4fb9-a9f3-1c73366b7de0";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js" ></script> <a href="http://www.authorize.net/" id="AuthorizeNetText" target="_blank">Payment Processing</a> </div>
         </div>
 
 
@@ -105,6 +108,6 @@
 		}
 	}
 	?>
-
+<div id="sitelock_shield_logo" class="fixed_btm" style="bottom:0;position:fixed;_position:absolute;right:0;"><a href="https://www.sitelock.com/verify.php?site=customglassandoptics.com" onclick="window.open('https://www.sitelock.com/verify.php?site=customglassandoptics.com','SiteLock','width=600,height=600,left=160,top=170');return false;" ><img alt="PCI Compliance and Malware Removal" title="SiteLock" src="//shield.sitelock.com/shield/customglassandoptics.com"></a></div>
 </body>
 </html>

@@ -1,0 +1,85 @@
+Item Number,Material Grade,Diameter (mm),Dimension Tol,Thickness (mm),Thickness Tol,Orientation ,Finish,TTV,Bow,Edge,Min Quantity,Price Each,25 - 49,50 - 99,100 +,Packaging
+CQTSQ001,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,42.75ST,SSP,5,10,CNC ground,10,$16.20,$9.20,$5.50,$3.40,Jar Pk
+CQTSQ002,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,42.75ST,DSP,5,10,CNC ground,10,$15.00,$8.40,$5.00,$3.10,Jar Pk
+CQTSQ003,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,X-cut,SSP,5,10,CNC ground,10,$18.10,$10.30,$6.10,$3.70,Jar Pk
+CQTSQ004,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,X-cut,DSP,5,10,CNC ground,10,$16.70,$9.50,$5.60,$3.50,Jar Pk
+CQTSQ005,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,Y-cut,SSP,5,10,CNC ground,10,$18.80,$10.70,$6.40,$3.90,Jar Pk
+CQTSQ006,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,Y-cut,DSP,5,10,CNC ground,10,$17.40,$9.90,$5.90,$3.60,Jar Pk
+CQTSQ007,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,5,10,CNC ground,10,$15.80,$9.00,$5.40,$3.30,Jar Pk
+CQTSQ008,SAW,25.4,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,5,10,CNC ground,10,$14.50,$8.20,$4.90,$3.00,Jar Pk
+CQTSQ009,Optical ,25.4,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,5,10,CNC ground,10,$16.50,$9.50,$5.60,$3.40,Jar Pk
+CQTSQ010,Optical ,25.4,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,5,10,CNC ground,10,$15.10,$8.60,$5.10,$3.10,Jar Pk
+CQTSQ011,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,42.75ST,SSP,5,10,CNC ground,10,$15.70,$8.90,$5.30,$3.20,Jar Pk
+CQTSQ012,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,42.75ST,DSP,5,10,CNC ground,10,$14.40,$8.10,$4.80,$2.90,Jar Pk
+CQTSQ013,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,X-cut,SSP,5,10,CNC ground,10,$17.40,$9.90,$5.90,$3.60,Jar Pk
+CQTSQ014,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,X-cut,DSP,5,10,CNC ground,10,$16.00,$9.10,$5.40,$3.30,Jar Pk
+CQTSQ015,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,Y-cut,SSP,5,10,CNC ground,10,$18.10,$10.30,$6.10,$3.70,Jar Pk
+CQTSQ016,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,Y-cut,DSP,5,10,CNC ground,10,$16.70,$9.50,$5.60,$3.50,Jar Pk
+CQTSQ017,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,5,10,CNC ground,10,$15.40,$8.70,$5.20,$3.20,Jar Pk
+CQTSQ018,SAW,25.4,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,5,10,CNC ground,10,$14.20,$7.90,$4.70,$2.90,Jar Pk
+CQTSQ019,Optical ,25.4,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,5,10,CNC ground,10,$16.00,$9.10,$5.40,$3.30,Jar Pk
+CQTSQ020,Optical ,25.4,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,5,10,CNC ground,10,$14.50,$8.30,$4.90,$3.00,Jar Pk
+CQTSQ021,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,42.75ST,SSP,7,15,CNC ground,10,$18.50,$11.60,$7.70,$6.00,Jar Pk
+CQTSQ022,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,42.75ST,DSP,7,15,CNC ground,10,$17.60,$11.00,$7.40,$5.70,Jar Pk
+CQTSQ023,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,X-cut,SSP,7,15,CNC ground,10,$20.40,$12.70,$8.50,$6.60,Jar Pk
+CQTSQ024,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,X-cut,DSP,7,15,CNC ground,10,$19.40,$12.20,$8.10,$6.30,Jar Pk
+CQTSQ025,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,Y-cut,SSP,7,15,CNC ground,10,$21.30,$13.30,$8.90,$6.90,Jar Pk
+CQTSQ026,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,Y-cut,DSP,7,15,CNC ground,10,$20.40,$12.70,$8.50,$6.60,Jar Pk
+CQTSQ027,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,7,15,CNC ground,10,$17.60,$11.00,$7.40,$5.70,Jar Pk
+CQTSQ028,SAW,50.8,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,7,15,CNC ground,10,$16.70,$10.40,$7.00,$5.40,Jar Pk
+CQTSQ029,Optical ,50.8,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,7,15,CNC ground,10,$18.50,$11.60,$7.70,$6.00,Jar Pk
+CQTSQ030,Optical ,50.8,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,7,15,CNC ground,10,$17.60,$11.00,$7.40,$5.70,Jar Pk
+CQTSQ031,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,42.75ST,SSP,7,15,CNC ground,10,$17.60,$11.00,$7.40,$5.70,Jar Pk
+CQTSQ032,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,42.75ST,DSP,7,15,CNC ground,10,$16.70,$10.40,$7.00,$5.40,Jar Pk
+CQTSQ033,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,X-cut,SSP,7,15,CNC ground,10,$19.40,$12.20,$8.10,$6.30,Jar Pk
+CQTSQ034,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,X-cut,DSP,7,15,CNC ground,10,$18.50,$11.60,$7.70,$6.00,Jar Pk
+CQTSQ035,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,Y-cut,SSP,7,15,CNC ground,10,$20.40,$12.70,$8.50,$6.60,Jar Pk
+CQTSQ036,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,Y-cut,DSP,7,15,CNC ground,10,$19.40,$12.20,$8.10,$6.30,Jar Pk
+CQTSQ037,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,7,15,CNC ground,10,$16.70,$10.40,$7.00,$5.40,Jar Pk
+CQTSQ038,SAW,50.8,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,7,15,CNC ground,10,$15.70,$9.90,$6.60,$5.10,Jar Pk
+CQTSQ039,Optical ,50.8,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,7,15,CNC ground,10,$17.60,$11.00,$7.40,$5.70,Jar Pk
+CQTSQ040,Optical ,50.8,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,7,15,CNC ground,10,$16.70,$10.40,$7.00,$5.40,Jar Pk
+CQTSQ041,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,42.75ST,SSP,9,20,CNC ground,10,$21.70,$18.20,$16.80,$14.50,Jar Pk
+CQTSQ042,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,42.75ST,DSP,9,20,CNC ground,10,$20.40,$17.00,$15.70,$13.70,Jar Pk
+CQTSQ043,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,X-cut,SSP,9,20,CNC ground,10,$22.20,$18.50,$17.10,$14.80,Jar Pk
+CQTSQ044,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,X-cut,DSP,9,20,CNC ground,10,$23.10,$19.30,$17.70,$15.40,Jar Pk
+CQTSQ045,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Y-cut,SSP,9,20,CNC ground,10,$22.70,$19.00,$17.40,$15.10,Jar Pk
+CQTSQ046,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Y-cut,DSP,9,20,CNC ground,10,$23.60,$19.60,$18.00,$15.70,Jar Pk
+CQTSQ047,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,9,20,CNC ground,10,$21.30,$17.70,$16.40,$14.30,Jar Pk
+CQTSQ048,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,9,20,CNC ground,10,$20.00,$16.70,$15.40,$13.40,Jar Pk
+CQTSQ049,Optical ,76.2,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,9,20,CNC ground,10,$21.70,$18.20,$16.80,$14.50,Jar Pk
+CQTSQ050,Optical ,76.2,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,9,20,CNC ground,10,$20.50,$17.00,$15.70,$13.70,Jar Pk
+CQTSQ051,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,42.75ST,SSP,9,20,CNC ground,10,$21.60,$17.70,$16.40,$14.30,Jar Pk
+CQTSQ052,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,42.75ST,DSP,9,20,CNC ground,10,$20.00,$16.70,$15.40,$13.40,Jar Pk
+CQTSQ053,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,X-cut,SSP,9,20,CNC ground,10,$21.90,$18.00,$16.80,$14.50,Jar Pk
+CQTSQ054,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,X-cut,DSP,9,20,CNC ground,10,$22.70,$18.80,$17.40,$15.10,Jar Pk
+CQTSQ055,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Y-cut,SSP,9,20,CNC ground,10,$22.20,$18.50,$17.10,$14.80,Jar Pk
+CQTSQ056,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Y-cut,DSP,9,20,CNC ground,10,$23.10,$19.30,$17.70,$15.40,Jar Pk
+CQTSQ057,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,9,20,CNC ground,10,$20.80,$17.40,$16.00,$14.00,Jar Pk
+CQTSQ058,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,9,20,CNC ground,10,$19.60,$16.40,$15.00,$13.10,Jar Pk
+CQTSQ059,Optical ,76.2,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,9,20,CNC ground,10,$21.30,$17.70,$16.40,$14.30,Jar Pk
+CQTSQ060,Optical ,76.2,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,9,20,CNC ground,10,$20.20,$16.70,$15.10,$13.40,Jar Pk
+CQTSQ061,SAW,100,+/- 0.20mm,0.35,+/- 50um,42.75ST,SSP,10,30,CNC ground,10,$48.00,$40.00,$38.20,$32.30,Jar Pk
+CQTSQ062,SAW,100,+/- 0.20mm,0.35,+/- 50um,42.75ST,DSP,10,30,CNC ground,10,$47.40,$38.80,$37.30,$31.40,Jar Pk
+CQTSQ063,SAW,100,+/- 0.20mm,0.35,+/- 50um,X-cut,SSP,10,30,CNC ground,10,$55.70,$45.90,$43.70,$37.00,Jar Pk
+CQTSQ064,SAW,100,+/- 0.20mm,0.35,+/- 50um,X-cut,DSP,10,30,CNC ground,10,$52.70,$43.40,$41.30,$35.00,Jar Pk
+CQTSQ065,SAW,100,+/- 0.20mm,0.35,+/- 50um,Y-cut,SSP,10,30,CNC ground,10,$56.00,$46.20,$44.00,$37.30,Jar Pk
+CQTSQ066,SAW,100,+/- 0.20mm,0.35,+/- 50um,Y-cut,DSP,10,30,CNC ground,10,$53.00,$43.70,$41.60,$35.30,Jar Pk
+CQTSQ067,SAW,100,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,10,30,CNC ground,10,$46.20,$38.20,$36.40,$30.80,Jar Pk
+CQTSQ068,SAW,100,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,10,30,CNC ground,10,$45.60,$37.60,$35.70,$30.20,Jar Pk
+CQTSQ069,Optical ,100,+/- 0.20mm,0.35,+/- 50um,Z-cut,SSP,10,30,CNC ground,10,$46.80,$38.50,$36.70,$31.10,Jar Pk
+CQTSQ070,Optical ,100,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,10,30,CNC ground,10,$45.90,$37.90,$36.00,$30.50,Jar Pk
+CQTSQ071,SAW,100,+/- 0.20mm,0.5,+/- 50um,42.75ST,SSP,10,30,CNC ground,10,$48.00,$39.70,$37.90,$32.00,Jar Pk
+CQTSQ072,SAW,100,+/- 0.20mm,0.5,+/- 50um,42.75ST,DSP,10,30,CNC ground,10,$47.70,$39.40,$37.60,$31.10,Jar Pk
+CQTSQ073,SAW,100,+/- 0.20mm,0.5,+/- 50um,X-cut,SSP,10,30,CNC ground,10,$55.10,$45.60,$43.40,$36.70,Jar Pk
+CQTSQ074,SAW,100,+/- 0.20mm,0.5,+/- 50um,X-cut,DSP,10,30,CNC ground,10,$52.40,$43.40,$41.30,$34.70,Jar Pk
+CQTSQ075,SAW,100,+/- 0.20mm,0.5,+/- 50um,Y-cut,SSP,10,30,CNC ground,10,$56.00,$46.20,$43.70,$37.00,Jar Pk
+CQTSQ076,SAW,100,+/- 0.20mm,0.5,+/- 50um,Y-cut,DSP,10,30,CNC ground,10,$53.00,$43.70,$41.60,$35.00,Jar Pk
+CQTSQ077,SAW,100,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,10,30,CNC ground,10,$45.90,$37.90,$36.00,$30.50,Jar Pk
+CQTSQ078,SAW,100,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,10,30,CNC ground,10,$43.70,$36.70,$34.80,$29.90,Jar Pk
+CQTSQ079,Optical ,100,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,10,30,CNC ground,10,$46.80,$38.50,$36.40,$30.80,Jar Pk
+CQTSQ080,Optical ,100,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,10,30,CNC ground,10,$44.40,$37.30,$35.10,$30.20,Jar Pk
+CQTSQ081,SAW,150,+/- 0.20mm,0.5,+/- 50um,42.75ST,SSP,15,50,CNC ground,10,"$1,070.80",$723.10,$670.80,$568.10,Jar Pk
+CQTSQ082,SAW,150,+/- 0.20mm,0.5,+/- 50um,42.75ST,DSP,15,50,CNC ground,10,"$1,020.00",$689.30,$640.00,$547.40,Jar Pk
+CQTSQ083,SAW,150,+/- 0.20mm,0.5,+/- 50um,Z-cut,SSP,15,50,CNC ground,10,$824.70,$557.00,$516.40,$440.90,Jar Pk
+CQTSQ084,SAW,150,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,15,50,CNC ground,10,$793.90,$535.70,$497.00,$424.30,Jar Pk

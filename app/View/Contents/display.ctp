@@ -2,9 +2,9 @@
     <h1><?php echo h($content['Content']['header']); ?></h1>
 </div>
 
-<div class="bread-crumbs">
+<!--<div class="bread-crumbs">
     <a href="#">Home</a>
-</div>
+</div>-->
 <?php
 // flash warning message
 echo $this->Session->flash();
@@ -36,6 +36,25 @@ echo $this->Session->flash();
                 // convert list type data
                 $productTypeData = unserialize($productType['ProductType']['attributes']);
 				
+				// sort product attributes according to assigned weights
+				if(!empty($productTypeData[2])){
+					$finalAttrs = array();
+					arsort($productTypeData[2]);
+					// invert existing type data array
+					$proAtts = array();
+					foreach($productTypeData[0] as $ptidx => $ptval){
+						$proAtts[$ptval] = $ptval;
+					}
+					// sort final attr values
+					foreach($productTypeData[2] as $ptidx => $ptval){
+						if(!empty($proAtts[$ptidx])){
+							$finalAttrs[$ptidx] = $proAtts[$ptidx];
+						}
+					}
+					
+					$productTypeData[0] = $finalAttrs;
+				}
+				
 				// store products data for JSON access
 				$jsonProdData = array();
 				
@@ -46,6 +65,11 @@ echo $this->Session->flash();
 				} else {
 					$rowspan = ' rowspan="2"';
 				}
+				
+				// print minimum purchase price header
+				if($productType['ProductType']['minPurchasePrice'] > 0){
+					echo '<div style="font-weight:700;text-align:right">Minimum $'.number_format($productType['ProductType']['minPurchasePrice'],2).' Purchase</div>';
+				}
 
                 // print products listing headers
                 echo '<table>
@@ -53,9 +77,15 @@ echo $this->Session->flash();
                                 <th'.$rowspan.'>Item Number</th>';
                     $diplayColumns = array();
                     $bubbleColumns = array();
+					$moreInfo = 0;
 					// check for bubble array and reset if not found
-					if(!is_array($productTypeData[1])){
-						$productTypeData[1] = array('No');
+					foreach($products as $product){
+						// check for bubble info values
+						foreach($productTypeData[1] as $bubbleColumn){
+							if(isset($productAttributes[$product['Product']['itemNumber']][$bubbleColumn]) && array_key_exists($bubbleColumn ,$attributes)){
+								++$moreInfo;
+							}
+						}
 					}
                     foreach($productTypeData[0] as $productAttribute){
                         if(!in_array($productAttribute, $productTypeData[1], true) && array_key_exists($productAttribute ,$attributes)){
@@ -68,14 +98,15 @@ echo $this->Session->flash();
 					if($productType['ProductType']['enforceQty'] == true){
 						echo '<th'.$rowspan.'>Quantity</th>';
 					}
+				
+                    echo '<th'.$rowspan.'>Price '.(!empty($productType['ProductType']['dimensionMeasurement']) ? 'per'.(!empty($productType['ProductType']['dimensionType']) ? ' '.$productType['ProductType']['dimensionType'].' ' : ' ').($productType['ProductType']['dimensionMeasurement'] == 'in' ? 'ft' : $productType['ProductType']['dimensionMeasurement']) : 'Each').'</th>';
 					
 					// print tiered pricing headers
 					if(!empty($tieredPricing)){
 						echo '<th colspan="'.count($tieredPricing).'" style="text-align:center">Volume Pricing</th>';
 					}
 					
-                    echo '<th'.$rowspan.'>Price '.(!empty($productType['ProductType']['dimensionMeasurement']) ? 'per'.(!empty($productType['ProductType']['dimensionType']) ? ' '.$productType['ProductType']['dimensionType'].' ' : ' ').($productType['ProductType']['dimensionMeasurement'] == 'in' ? 'ft' : $productType['ProductType']['dimensionMeasurement']) : 'Each').'</th>';
-					if($productTypeData[1][0] != 'No'){
+					if($moreInfo > 0){
 						echo '<th'.$rowspan.' class="lw">More Info</th>';
 					}
 					// gather max min quantity and determin full size options
@@ -138,6 +169,7 @@ echo $this->Session->flash();
 					// store product for json object retrieval
 					$jsonProdData[$product['Product']['itemNumber']] = array(
 												'price'=>$product['Product']['price'],
+												'minPurchasePrice'=>$productType['ProductType']['minPurchasePrice'],
 												'enforceQty'=>$productType['ProductType']['enforceQty'],
 												'quantity'=>(!empty($product['Product']['quantity']) ? $product['Product']['quantity'] : 0),
 												'minQty'=>(!empty($product['Product']['minQty']) ? $product['Product']['minQty'] : 0),
@@ -165,6 +197,8 @@ echo $this->Session->flash();
 						echo '<td>'.$product['Product']['quantity'].'</td>';
 					}
 					
+                    echo '<td class="cost-clm">$'.$product['Product']['price'].'</td>';
+					
 					// print product tiered pricing, if assigned
 					if(!empty($tieredPricing)){
 						foreach($tieredPricing  as $tpidx => $tpval){
@@ -180,16 +214,14 @@ echo $this->Session->flash();
 							
 						}
 					}
-					
-                    echo '<td class="cost-clm">$'.$product['Product']['price'].'</td>';
                     
 					// generate content bubble
                     $bubbleTxt = '';
 					// print more info bubbles
-					if($productTypeData[1][0] != 'No'){
+					if($moreInfo > 0){
 						foreach($productTypeData[1] as $bubbleColumn){
 							if(isset($productAttributes[$product['Product']['itemNumber']][$bubbleColumn]) && array_key_exists($bubbleColumn ,$attributes)){
-								$bubbleTxt .= '<b>'.$attributes[$bubbleColumn].'</b> '.$productAttributes[$product['Product']['itemNumber']][$bubbleColumn]['ProductAttribute']['content'].'<br>';
+								$bubbleTxt .= '<b>'.$attributes[$bubbleColumn].'</b> '.str_replace('"',"''",$productAttributes[$product['Product']['itemNumber']][$bubbleColumn]['ProductAttribute']['content']).'<br>';
 							}
 	
 						}
@@ -251,7 +283,7 @@ echo $this->Session->flash();
                     <script>
 					'use strict';
 					
-					var prodDataJSON, currentQtys = {};
+					var prodDataJSON, currentQtys = {}, initWalk = 0;
 					
 					// update order total display
 					var updatePgTotal = function(){
@@ -350,9 +382,30 @@ echo $this->Session->flash();
 						// assign product pricing
 						var total = price * dimMulti * qty;
 						total = total.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+						currentQtys[itmNmbr].total = total;
 						
 						// update pricing in page
-						$('.ttl-clm').eq(idx).html('$'+total);
+						if(Number(prodDataJSON[itmNmbr].minPurchasePrice) > 0 && total < Number(prodDataJSON[itmNmbr].minPurchasePrice)){
+							if(initWalk === 1 && qty > 0) {
+								$('.ttl-clm').eq(idx).html('<strong>$'+total+'</strong>');
+								$('.ttl-clm')
+									.eq(idx)
+									.attr('data-content','minimum purchase price not met')
+									.attr('data-toggle','popover')
+									.popover('show');
+							} else {
+								$('.ttl-clm')
+									.eq(idx)
+									.html('$'+total)
+									.popover('hide');
+							}
+							// delete item from current qtys to prevent cart addition
+						} else {
+							$('.ttl-clm')
+								.eq(idx)
+								.html('$'+total)
+								.popover('hide');
+						}
 						
 						// save details to session variable via JSON AJAX
 						$.ajax({
@@ -433,7 +486,7 @@ echo $this->Session->flash();
 							};
 							
 							// store default qty vals
-							currentQtys[itmNmbr] = {'qty':0,'dimEnabled':dimEnabled,'length':0,'width':0,'url':document.URL};
+							currentQtys[itmNmbr] = {'qty':0,'dimEnabled':dimEnabled,'length':0,'width':0,'url':document.URL,'minPurchasePrice':prodDataJSON[itmNmbr].minPurchasePrice,'total':0};
 							
 							updateProdQty(index,itmNmbr);
 						});
@@ -453,6 +506,7 @@ echo $this->Session->flash();
 						// set product defaults on page load
 						$.getJSON("/cart/get",function(data){
 							prodDefaults(data);
+							initWalk = 1;
 						});
 					
 						// handle product pricing
@@ -491,7 +545,7 @@ echo $this->Session->flash();
 				if(!isset($this->request->data['Contact']['name']) && !isset($this->request->data['Contact']['email']) && !isset($this->request->data['Contact']['message'])){
 					echo $this->Form->create('Contact', array('type'=>'file')); ?>
                     <fieldset>
-                        <legend><?php echo __('Contact Custom Glass & Silicon'); ?></legend>
+                        <legend><?php echo __('Contact Custom Glass & Optics'); ?></legend>
                     <?php
                         echo $this->Form->input('name', array('required'=>'required', 'label'=>'Name: *', 'class'=>'form-control',));
                         echo $this->Form->input('email', array('required'=>'required', 'label'=>'Email: *', 'class'=>'form-control',));

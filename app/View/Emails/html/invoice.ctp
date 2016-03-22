@@ -7,7 +7,7 @@
 		?>
             <table border="1" cellpadding="3" cellspacing="0" width="670">
             	<tr>
-                	<td colspan="6" style="text-align:left"><img src="http://cs.studiocenter.com/img/cgs-logo.png" style="width:175px;height:auto" id="logo" alt="custom silicon and glass logo image"></td>
+                	<td colspan="7" style="text-align:left"><img src="http://cs.studiocenter.com/img/cgs-logo.png" style="width:175px;height:auto" id="logo" alt="custom silicon and glass logo image"></td>
                 </tr>
             	<tr>
                 	<td colspan="2" style="text-align:left;padding:5px" valign="top">
@@ -74,7 +74,7 @@
 				echo '<td>'.(!empty($val['width']) ? $val['width'] : 'N/A').'</td>';
 				echo '<td>'.$val['qty'].'</td>';
 				echo '<td>$<span class="price">'.number_format($val['price'],2).'</span></td>';
-				echo (isset($shipping[$idx]['shipDate']) ? '<td>$<span class="shipping">'.number_format($shipping[$idx]['shipDate'],2).'</span></td>' : '<td>TBD</td>');
+				echo (isset($shipping[$idx]['shipDate']) ? '<td>'.$shipping[$idx]['shipDate'].'</td>' : '<td>TBD</td>');
 				echo (isset($shipping[$idx]['selShipCost']) ? '<td>$<span class="shipping">'.number_format($shipping[$idx]['selShipCost'],2).'</span></td>' : '<td>TBA</td>');
 				echo '</tr>';
 			}
@@ -92,7 +92,25 @@
                 	<td>$<span class="subTotal"><?php echo number_format($order['Order']['total'],2,'.',','); ?></span></td>
                 </tr>
             	<tr>
-                	<td colspan="4">&nbsp;</td>
+                	<td colspan="4">
+                    					 <?php
+                     switch($order['Order']['status']){
+						 case 'processing':
+						 	echo '<p>Your order has been updated with planned ship date(s), shipping and packaging charges (if applicable).  Please contact us immediately if you have any questions or issues with this information. Otherwise, we will proceed to fill the order and charge your credit card accordingly.</p>';
+						 break;
+						 case 'shipping':
+						 	echo '<p>Your order has shipped and your credit card has been charged accordingly.  Thank you for working with us.  We look forward to servicing your future needs.</p>';
+						 break;
+						 case 'delivered':
+						 	echo '<p>Your order has been delivered and your credit card charged accordingly.  Please contact us if there is anything more you need.</p>';
+						 break;
+						 case 'pending':
+						 default:
+						 	echo '<p>Thank you for your order, it has been received and entered into our system.  You will receive a follow up email confirming ship date(s) and freight charges if applicable. </p>';
+						 break;
+					 };
+                    ?>
+					</td>
                 	<td colspan="3">
                         <h4>Order Instructions</h4>
                          <?php

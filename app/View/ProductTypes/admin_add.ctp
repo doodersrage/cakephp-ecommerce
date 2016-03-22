@@ -4,6 +4,7 @@
 		<legend><?php echo __('Admin Add Product Type'); ?></legend>
 	<?php
 		echo $this->Form->input('title', array('class'=>'form-control',));
+		echo $this->Form->input('minPurchasePrice', array('label'=>'Minimum Purchase Price','class'=>'form-control',));
 		echo $this->Form->input('enforceQty', array('label'=>'Enforce Product Quanity Values','class'=>'form-control',));
 		echo $this->Form->input('custDimension', array('label'=>'Allow Customer Dimension Entry?','class'=>'form-control',));
 		echo $this->Form->input('dimensionType', array('class'=>'form-control','options'=>array('','square'=>'Square','linear'=>'Linear')));
@@ -24,7 +25,7 @@
 		// print available attributes
 		echo '<table class="table table-striped">
 				<tr>
-					<th>Attribute</th><th>Combine in Popover</th>
+					<th>Attribute</th><th>Combine in Popover</th><th>Sort Order</th>
 				</tr>';
 		foreach($attributes as $val){
 			echo '<tr>
@@ -33,6 +34,9 @@
 					</td>
 					<td>
 						<input type="checkbox" name="attributesHide[]" value="'.$val['ProductAttributeType']['id'].'">
+					</td>
+					<td>
+						<input type="text" name="attributesSort['.$val['ProductAttributeType']['id'].']" value="0" >
 					</td>
 				</tr>';
 		}

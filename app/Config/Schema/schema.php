@@ -17,7 +17,7 @@ class AppSchema extends CakeSchema {
 	                $user->create();
 	                $user->save(
 	                    array(
-                        	'email' => 'rob@studiocenter.com',
+                        	'email' => 'SALES@CUSTOMGLASSANDOPTICS.COM',
                         	'username' => 'admin',
                         	'password' => 'production1',
                         	'role' => 'admin',

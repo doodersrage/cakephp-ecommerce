@@ -1,0 +1,29 @@
+Item Number,Material Grade,Diameter (mm),Dimension Tol,Thickness (mm),Thickness Tol,Orientation ,Finish,TTV,Bow,Edge,Min Quantity,Price Each,25 - 49,50 - 99,100 +,Packaging
+CQTLN001,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Y128/Y36-cut,SSP,5,20,CNC ground,10,$19.30 ,$15.40 ,$14.80 ,$13.80 ,Jar Pk
+CQTLN002,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Y128/Y36-cut,DSP,3,15,CNC ground,10,$34.70 ,$27.70 ,$26.70 ,$24.80 ,Jar Pk
+CQTLN003,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Y-Cut,SSP,5,20,CNC ground,10,$19.30 ,$15.40 ,$14.80 ,$13.80 ,Jar Pk
+CQTLN004,SAW,76.2,+/- 0.20mm,0.35,+/- 50um,Y-Cut,DSP,3,15,CNC ground,10,$34.70 ,$27.70 ,$26.70 ,$24.80 ,Jar Pk
+CQTLN005,Optical ,76.2,+/- 0.20mm,0.35,+/- 50um,X-cut,DSP,3,15,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN006,Optical ,76.2,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,3,15,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN007,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Y128/Y36-cut,SSP,5,20,CNC ground,10,$19.30 ,$15.40 ,$14.80 ,$13.80 ,Jar Pk
+CQTLN008,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Y128/Y36-cut,DSP,3,15,CNC ground,10,$34.70 ,$27.70 ,$26.70 ,$24.80 ,Jar Pk
+CQTLN009,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Y-Cut,SSP,5,10,CNC ground,10,$19.30 ,$15.40 ,$14.80 ,$13.80 ,Jar Pk
+CQTLN010,SAW,76.2,+/- 0.20mm,0.5,+/- 50um,Y-Cut,DSP,3,15,CNC ground,10,$34.70 ,$27.70 ,$26.70 ,$24.80 ,Jar Pk
+CQTLN011,Optical ,76.2,+/- 0.20mm,0.5,+/- 50um,X-cut,DSP,3,15,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN012,Optical ,76.2,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,3,15,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN013,SAW,100,+/- 0.20mm,0.35,+/- 50um,Y128/Y36-cut,SSP,5,25,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN014,SAW,100,+/- 0.20mm,0.35,+/- 50um,Y128/Y36-cut,DSP,3,15,CNC ground,10,$57.70 ,$46.20 ,$44.40 ,$41.30 ,Jar Pk
+CQTLN015,SAW,100,+/- 0.20mm,0.35,+/- 50um,Y-Cut,SSP,5,25,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN016,SAW,100,+/- 0.20mm,0.35,+/- 50um,Y-Cut,DSP,3,15,CNC ground,10,$57.70 ,$46.20 ,$44.40 ,$41.30 ,Jar Pk
+CQTLN017,Optical ,100,+/- 0.20mm,0.35,+/- 50um,X-cut,DSP,3,15,CNC ground,10,$100.00 ,$80.00 ,$77.00 ,$71.50 ,Jar Pk
+CQTLN018,Optical ,100,+/- 0.20mm,0.35,+/- 50um,Z-cut,DSP,3,15,CNC ground,10,$100.00 ,$80.00 ,$77.00 ,$71.50 ,Jar Pk
+CQTLN019,SAW,100,+/- 0.20mm,0.5,+/- 50um,Y128/Y36-cut,SSP,5,25,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN020,SAW,100,+/- 0.20mm,0.5,+/- 50um,Y128/Y36-cut,DSP,3,15,CNC ground,10,$57.70 ,$46.20 ,$44.40 ,$41.30 ,Jar Pk
+CQTLN021,SAW,100,+/- 0.20mm,0.5,+/- 50um,Y-Cut,SSP,5,25,CNC ground,10,$38.50 ,$30.80 ,$29.60 ,$27.50 ,Jar Pk
+CQTLN022,SAW,100,+/- 0.20mm,0.5,+/- 50um,Y-Cut,DSP,3,15,CNC ground,10,$57.70 ,$46.20 ,$44.40 ,$41.30 ,Jar Pk
+CQTLN023,Optical ,100,+/- 0.20mm,0.5,+/- 50um,X-cut,DSP,3,15,CNC ground,10,$100.00 ,$80.00 ,$77.00 ,$71.50 ,Jar Pk
+CQTLN024,Optical ,100,+/- 0.20mm,0.5,+/- 50um,Z-cut,DSP,3,15,CNC ground,10,$100.00 ,$80.00 ,$77.00 ,$71.50 ,Jar Pk
+CQTLN025,SAW,150,+/- 0.20mm,0.5,+/- 50um,Y128-cut,SSP,10,55,CNC ground,10,$121.20 ,$97.00 ,$93.20 ,$86.60 ,Jar Pk
+CQTLN026,SAW,150,+/- 0.20mm,0.5,+/- 50um,Y128-cut,DSP,10,30,CNC ground,10,$153.90 ,$123.10 ,$118.40 ,$109.90 ,Jar Pk
+CQTLN027,SAW,150,+/- 0.20mm,0.5,+/- 50um,Y-Cut,SSP,10,55,CNC ground,10,$153.90 ,$123.10 ,$118.40 ,$109.90 ,Jar Pk
+CQTLN028,SAW,150,+/- 0.20mm,0.5,+/- 50um,Y-Cut,DSP,10,30,CNC ground,10,$192.40 ,$153.90 ,$148.00 ,$137.40 ,Jar Pk

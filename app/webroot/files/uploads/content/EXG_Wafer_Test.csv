@@ -1,0 +1,3 @@
+Item Number,Diameter (mm),Thickness (mm),Quality,Min Quantity,-24,25 - 49,50 - 99,100 +,Quantity,Price,Cost,Orientation,Thickness Tol,Dimension Tol
+EXG762038050,76.2,0.3,80/50,10,$9.10 ,$8.40 ,$7.80 ,$7.30 ,, , ,Single SEMI Flat,+/- 30um,+/- 0.20mm
+EXG762036040,76.2,0.3,60/40,10,$10.40 ,$9.60 ,$8.90 ,$8.30 ,, , ,Single SEMI Flat,+/- 30um,+/- 0.20mm

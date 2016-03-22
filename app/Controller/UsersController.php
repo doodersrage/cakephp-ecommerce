@@ -107,9 +107,9 @@ class UsersController extends AppController {
 										));
 					$Email->to($this->request->data['User']['email']);
 					$Email->emailFormat('html');
-					$Email->subject('CGS Account Signup');
-					$Email->replyTo('noreply@cgs.com');
-					$Email->from ('noreply@cgs.com');
+					$Email->subject('CGO Account Signup');
+					$Email->replyTo('sales@customglassandoptics.com');
+					$Email->from ('sales@customglassandoptics.com');
 					$Email->send();
 	
 					return $this->redirect(array('action' => 'thanks'));
@@ -153,9 +153,9 @@ class UsersController extends AppController {
 										));
 					$Email->to($this->request->data['User']['email']);
 					$Email->emailFormat('html');
-					$Email->subject('CGS Account Signup');
-					$Email->replyTo('noreply@cgs.com');
-					$Email->from ('noreply@cgs.com');
+					$Email->subject('CGO Account Signup');
+					$Email->replyTo('sales@customglassandoptics.com');
+					$Email->from ('sales@customglassandoptics.com');
 					$Email->send();
 
 					$this->Session->setFlash(__('The user has been saved'), 'alert', array(
@@ -241,9 +241,9 @@ class UsersController extends AppController {
 									));
 				$Email->to($this->request->data['User']['email']);
 				$Email->emailFormat('html');
-				$Email->subject('CGS Account Password Reset');
-				$Email->replyTo('noreply@cgs.com');
-				$Email->from ('noreply@cgs.com');
+				$Email->subject('CGO Account Password Reset');
+				$Email->replyTo('sales@customglassandoptics.com');
+				$Email->from ('sales@customglassandoptics.com');
 				$Email->send();
 			
 				if ($user) {

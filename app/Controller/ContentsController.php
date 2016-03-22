@@ -67,6 +67,7 @@ class ContentsController extends AppController {
 						} else {
 							$this->set('title_for_layout', $content['Content']['title']);
 						}
+						$this->set('description_for_layout', $content['Content']['metaDescription']);
 						// gather associated product data
 						$this->gatherProducts($content['Content']['id'],$content['Content']['productListType']);
 						// store page content
@@ -85,6 +86,7 @@ class ContentsController extends AppController {
 						} else {
 							$this->set('title_for_layout', $content['Content']['title']);
 						}
+						$this->set('description_for_layout', $content['Content']['metaDescription']);
 						// gather associated product data
 						$this->gatherProducts($content['Content']['id'],$content['Content']['productListType']);
 						// store page content
@@ -114,9 +116,9 @@ class ContentsController extends AppController {
 						'name' => $this->request->data['Contact']['name'],
 						'message' => $this->request->data['Contact']['message'],
 					));
-					$Email->to('ralston@coresix.com','rob@studiocenter.com');
+					$Email->to('sales@customglassandoptics.com');
 					$Email->emailFormat('html');
-					$Email->subject('CGS Contact Form Submission');
+					$Email->subject('CGO Contact Form Submission');
 					$Email->replyTo($this->request->data['Contact']['email']);
 					$Email->from ($this->request->data['Contact']['email']);
 					$Email->send();
@@ -175,13 +177,14 @@ class ContentsController extends AppController {
 				$options = array('conditions' => array('ProductType.id' => $productListType));
 				$productType = $this->ProductType->find('first', $options);
 				$this->set('productType',$productType);
-
+				
 				// gather attribute headers
 				$attributes = $this->ProductAttributeType->find('all');
 				$attrArr = array();
 				foreach($attributes as $attribute){
 					$attrArr[$attribute['ProductAttributeType']['id']] = $attribute['ProductAttributeType']['title'];
 				}
+				
 				$this->set('attributes', $attrArr);
 			}
 		}
@@ -667,6 +670,7 @@ class ContentsController extends AppController {
 	// gather page options
 	public $navOpts;
 	private function gen_mnu_opts(){
+		$this->navOpts[0] = '';
 		foreach($this->topNav as $idx => $mItm){
 			if(isset($mItm['Content'])){
 				$this->navOpts[$mItm['Content']['id']] = $mItm['Content']['title'];

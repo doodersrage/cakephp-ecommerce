@@ -1,0 +1,14 @@
+Item Number,Material,Thickness (mm),Stock Length,Stock Width,Price Each,Quality,Thickness Tol,Dimension Tol,Min Quantity
+EXGSTK030,Eagle XG,0.30mm,1510.00mm,960.00mm,405.3,80/50,+/-0.03,+/-0.20,5
+EXGSTK040,Eagle XG,0.40mm,1510.00mm,960.00mm,287.2,80/50,+/-0.04,+/-0.20,5
+EXGSTK050,Eagle XG,0.50mm,1510.00mm,960.00mm,240.7,80/50,+/-0.05,+/-0.20,5
+EXGSTK070,Eagle XG,0.70mm,1510.00mm,960.00mm,215.4,80/50,+/-0.07,+/-0.20,5
+EXGSTK110,Eagle XG,1.10mm,1510.00mm,960.00mm,348.8,80/50,+/-0.10,+/-0.20,5
+BORSTK070,Borofloat,0.70mm,850.90mm,1123.95mm,176.5,80/50,+/-0.07,+/-0.20,5
+BORSTK110,Borofloat,1.10mm,850.90mm,1123.95mm,157.4,80/50,+/-0.10,+/-0.20,5
+BORSTK175,Borofloat,1.75mm,850.90mm,1123.95mm,94.2,80/50,+/-0.20,+/-0.20,5
+BORSTK200,Borofloat,2.00mm,850.90mm,1123.95mm,89.8,80/50,+/-0.20,+/-0.25,5
+BORSTK225,Borofloat,2.25mm,850.90mm,1123.95mm,88.3,80/50,+/-0.20,+/-0.25,5
+BORSTK275,Borofloat,2.75mm,850.90mm,1123.95mm,88.3,80/50,+/-0.20,+/-0.25,5
+BORSTK330,Borofloat,3.30mm,850.90mm,1123.95mm,95.7,80/50,+/-0.20,+/-0.25,5
+,, ,,,,,,, 

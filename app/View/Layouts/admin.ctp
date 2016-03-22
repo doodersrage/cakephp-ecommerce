@@ -9,7 +9,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
-
+    <meta name="robots" content="noindex">
+    
 	<!-- Le styles -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 	<style>
@@ -48,7 +49,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<?php echo $this->Html->link('Coresix', array(
+				<?php echo $this->Html->link('CGS', array(
 					'controller' => 'pages',
 					'action' => 'index'
 				), array('class' => 'navbar-brand')); ?>

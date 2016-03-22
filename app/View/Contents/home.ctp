@@ -2,9 +2,9 @@
     <h1><?php echo h($content['Content']['header']); ?></h1>
 </div>
 
-<div class="bread-crumbs">
+<!--<div class="bread-crumbs">
     <a href="#">Home</a>
-</div>
+</div>-->
 <?php
 // flash warning message
 echo $this->Session->flash();
@@ -14,36 +14,36 @@ echo $this->Session->flash();
 	<div class="info-blocks">
         <div class="row">
              <div class="col-lg-4 col-md-4">
-               <a class="image" href="/pages/7"><?php echo $this->Html->image('/app/webroot/img/20131024-KW7_3779-Edit.jpg', array('alt' => 'Glass Wafers')); ?></a>
-               <a class="hover-text" href="/pages/7">Glass Wafers</a>
+               <a class="image" href="/pages/21"><?php echo $this->Html->image('/app/webroot/img/home/Glass-Materials-(Home).jpg', array('alt' => 'Glass Materials')); ?></a>
+               <a class="hover-text" href="/pages/21">Glass Materials</a>
              </div>
              <div class="col-lg-4 col-md-4">
-               <a class="image" href="/pages/products"><?php echo $this->Html->image('/app/webroot/img/20131024-KW7_3824-Edit.jpg', array('alt' => 'CakePHP')); ?></a>
-               <a class="hover-text" href="/pages/products">Glass Wafers</a>
+               <a class="image" href="/pages/23"><?php echo $this->Html->image('/app/webroot/img/home/Glass-Wafers-(Home).jpg', array('alt' => 'Glass Wafers')); ?></a>
+               <a class="hover-text" href="/pages/23">Glass Wafers</a>
              </div>
-             <div class="col-lg-4 col-md-4">
-               <a class="image" href="/pages/10"><?php echo $this->Html->image('/app/webroot/img/KW7_3798.jpg', array('alt' => 'Glass Tube and Rod')); ?></a>
-               <a class="hover-text" href="/pages/10">Glass Tube and Rod</a>
-             </div>
+            <div class="col-lg-4 col-md-4">
+               <a class="image" href="/pages/fused-silica-wafers"><?php echo $this->Html->image('/app/webroot/img/home/Silicon-Wafers-(Home).jpg', array('alt' => 'Fused Silica Wafers')); ?></a>
+               <a class="hover-text" href="/pages/fused-silica-wafers">Fused Silica Wafers</a>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-4">
-               <a class="image" href="/pages/products"><?php echo $this->Html->image('/app/webroot/img/KW7_3820-Edit.jpg', array('alt' => 'CakePHP')); ?></a>
-               <a class="hover-text" href="/pages/products">Glass Wafers</a>
+               <a class="image" href="/pages/pyrex-rod-tube"><?php echo $this->Html->image('/app/webroot/img/home/Pyrex-Rod-and-Tube-(Home).jpg', array('alt' => 'Pyrex Rod and Tubing')); ?></a>
+               <a class="hover-text" href="/pages/pyrex-rod-tube">Pyrex Rod and Tubing</a>
             </div>
             <div class="col-lg-4 col-md-4">
-               <a class="image" href="/pages/products"><?php echo $this->Html->image('/app/webroot/img/KW7_3810.jpg', array('alt' => 'CakePHP')); ?></a>
-               <a class="hover-text" href="/pages/products">Glass Wafers</a>
+               <a class="image" href="/pages/12"><?php echo $this->Html->image('/app/webroot/img/home/Sapphire-Wafers.jpg', array('alt' => 'Sapphire Wafers')); ?></a>
+               <a class="hover-text" href="/pages/12">Sapphire Wafers</a>
             </div>
-            <div class="col-lg-4 col-md-4">
-               <a class="image" href="/pages/products"><?php echo $this->Html->image('/app/webroot/img/KW7_3801.jpg', array('alt' => 'CakePHP')); ?></a>
-               <a class="hover-text" href="/pages/products">Glass Wafers</a>
-            </div>
+             <div class="col-lg-4 col-md-4">
+               <a class="image" href="/pages/optical-glass-products"><?php echo $this->Html->image('/app/webroot/img/home/DSC04657.jpg', array('alt' => 'Glass Tube and Rod')); ?></a>
+               <a class="hover-text" href="/pages/optical-glass-products">Miscellaneous</a>
+             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12" style="text-align:center">
-            <a href="/pages/products"><?php echo $this->Html->image('/app/webroot/img/Rectangle_3.png', array('alt' => 'view more products')); ?></a>
+            <a href="/pages/optical-glass-products"><?php echo $this->Html->image('/app/webroot/img/Rectangle_3.png', array('alt' => 'view more products')); ?></a>
         </div>
     </div>
     <div class="row">
@@ -52,7 +52,6 @@ echo $this->Session->flash();
         </div>
         <div class="col-lg-4  col-md-4">
             <?php echo $content['Content']['content']; ?>
-            <?php echo $this->Html->image('/app/webroot/img/KW7_3225.jpg', array('alt' => 'CakePHP')); ?>
         </div>
     </div>
 </div>

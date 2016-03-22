@@ -65,7 +65,7 @@
                     <th>SHIP DATE</th>
                 	<th>FREIGHT CHARGE</th>
                 </tr>
-            <?php
+            <?php 
 			foreach($products as $idx => $val){
 				echo '<tr class="'.preg_replace('/[^a-z0-9]+/i', '_', $idx).'">';
 				echo '<td><a href="'.$val['url'].'">'.$idx.'</a></td>';
@@ -103,17 +103,18 @@
             <p style="text-align:center"><strong><a target="_blank" href="/admin/orders/invoice/<?php echo $order['Order']['id']; ?>">Click here to print invoice.</a></strong></p>
             <?php
 		} else {
-			echo '<p>Your recent orders list appears to be empty!</p>';
+			echo '<p>Order was not found!</p>';
 		}
 		?>
 </div>
 <div class="col-lg-3 col-md-3 sidebar actions">
 	<h3><?php echo __('Options'); ?></h3>
     <?php
-	$orderOpts = array('pending','processing','shipping','delivered');
-	echo $this->Form->input('status', array('label'=>'Order Status:','class'=>'form-control','options'=>$orderOpts));
-	echo $this->Form->input('notes', array('label'=>'Order Notes:','class'=>'form-control','type'=>'textarea'));
+	$orderOpts = array('pending'=>'pending','processing'=>'processing','shipping'=>'shipping','delivered'=>'delivered');
+	echo $this->Form->input('status', array('label'=>'Order Status:','class'=>'form-control','options'=>$orderOpts,'value'=>$order['Order']['status']));
+	echo $this->Form->input('notes', array('label'=>'Order Notes:','class'=>'form-control','type'=>'textarea','value'=>$order['Order']['notes']));
 	echo $this->Form->input('notifyCustomer', array('label'=>'Notify customer on update?','class'=>'form-control','type'=>'checkbox'));
 	?>
 </div>
-<span style="text-align:center"><?php echo $this->Form->end(__('Submit')); ?></span>
+<span style="text-align:center"><?php echo $this->Form->submit(); ?></span>
+<?php echo $this->Form->end(); ?>

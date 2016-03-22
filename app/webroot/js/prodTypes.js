@@ -24,9 +24,11 @@ var addTierRow = function(defQuant, defHeader){
 }
 
 var loadExistingPrices = function(){
-	var priceCnt = tieredPrices.length;
-	for(var i = 0; i < priceCnt; ++i){
-		addTierRow(tieredPrices[i][0], tieredPrices[i][1]);
+	if(typeof tieredPrices === 'object'){
+		var priceCnt = tieredPrices.length;
+		for(var i = 0; i < priceCnt; ++i){
+			addTierRow(tieredPrices[i][0], tieredPrices[i][1]);
+		}
 	}
 }
 

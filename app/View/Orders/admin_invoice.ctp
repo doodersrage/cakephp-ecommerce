@@ -96,6 +96,15 @@
 						?>
                    </td>
                 </tr>
+            	<tr>
+                	<td colspan="4">&nbsp;</td>
+                	<td colspan="3">
+                        <h4>Order Notes</h4>
+                         <?php
+						 echo $order['Order']['notes'];
+						?>
+                   </td>
+                </tr>
             </table>
             <?php
 		} else {

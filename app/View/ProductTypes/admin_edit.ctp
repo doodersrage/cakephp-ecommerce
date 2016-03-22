@@ -5,6 +5,7 @@
 	<?php
 		echo $this->Form->input('id', array('hiddenField' => true));
 		echo $this->Form->input('title', array('class'=>'form-control',));
+		echo $this->Form->input('minPurchasePrice', array('label'=>'Minimum Purchase Price','class'=>'form-control',));
 		echo $this->Form->input('enforceQty', array('label'=>'Enforce Product Quanity Values','class'=>'form-control',));
 		echo $this->Form->input('custDimension', array('label'=>'Allow Customer Dimension Entry?','class'=>'form-control',));
 		echo $this->Form->input('dimensionType', array('class'=>'form-control','options'=>array('','square'=>'Square','linear'=>'Linear')));
@@ -32,15 +33,18 @@
 		$attrArr = unserialize($this->request->data['ProductType']['attributes']);
 		echo '<table class="table table-striped">
 				<tr>
-					<th>Attribute</th><th>Combine in Popover</th>
+					<th>Attribute</th><th>Combine in Popover</th><th>Sort Order</th>
 				</tr>';
 		foreach($attributes as $val){
 			echo '<tr>
 					<td>
-					<input type="checkbox" name="attributes[]" value="'.$val['ProductAttributeType']['id'].'"'.(is_array($attrArr[0]) ? (in_array($val['ProductAttributeType']['id'],$attrArr[0],true) ? ' checked="checked" ' : '') : '').'> '.$val['ProductAttributeType']['title'].'
+						<input type="checkbox" name="attributes[]" value="'.$val['ProductAttributeType']['id'].'"'.(is_array($attrArr[0]) ? (in_array($val['ProductAttributeType']['id'],$attrArr[0],true) ? ' checked="checked" ' : '') : '').'> '.$val['ProductAttributeType']['title'].'
 					</td>
 					<td>
-					<input type="checkbox" name="attributesHide[]" value="'.$val['ProductAttributeType']['id'].'"'.(is_array($attrArr[1]) ? (in_array($val['ProductAttributeType']['id'],$attrArr[1],true) ? ' checked="checked" ' : '') : '').'>
+						<input type="checkbox" name="attributesHide[]" value="'.$val['ProductAttributeType']['id'].'"'.(is_array($attrArr[1]) ? (in_array($val['ProductAttributeType']['id'],$attrArr[1],true) ? ' checked="checked" ' : '') : '').'>
+					</td>
+					<td>
+						<input type="text" name="attributesSort['.$val['ProductAttributeType']['id'].']" value="'.(!empty($attrArr[2]) ? (is_array($attrArr[2]) ? (!empty($attrArr[2][$val['ProductAttributeType']['id']]) ? $attrArr[2][$val['ProductAttributeType']['id']] : 0) : 0) : 0).'" >
 					</td>
 				</tr>';
 		}

@@ -80,7 +80,7 @@ Examples:
 ATTENTION: The trailing slash is required.
 */
 //$baseDir = resolveUrl($baseUrl);
-$baseDir = '/var/www/vhosts/studiocenter.com/cs.studiocenter.com/app/webroot/files/uploads/';
+$baseDir = '/var/www/vhosts/customglassandoptics.com/httpdocs/app/webroot/files/uploads/';
 
 /*
  * ### Advanced Settings

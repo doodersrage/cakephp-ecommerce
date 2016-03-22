@@ -83,10 +83,12 @@ class ProductTypesController extends AppController {
 		$this->set('jsIncludes',array('prodTypes'));  
 
 		if ($this->request->is('post')) {
+			
 			// store selected attribute data
 			$selAttr = $this->request->data('attributes');
 			$selAttrHide = $this->request->data('attributesHide');
-			$attrArray = serialize(array($selAttr, $selAttrHide));
+			$attributesSort = $this->request->data('attributesSort');
+			$attrArray = serialize(array($selAttr, $selAttrHide, $attributesSort));
 			$this->request->data['ProductType']['attributes'] = $attrArray;
 			
 			// save tiered pricing settings
@@ -136,7 +138,8 @@ class ProductTypesController extends AppController {
 			// store selected attribute data
 			$selAttr = $this->request->data('attributes');
 			$selAttrHide = $this->request->data('attributesHide');
-			$attrArray = serialize(array($selAttr, $selAttrHide));
+			$attributesSort = $this->request->data('attributesSort');
+			$attrArray = serialize(array($selAttr, $selAttrHide, $attributesSort));
 			$this->request->data['ProductType']['attributes'] = $attrArray;
 
 			// save tiered pricing settings

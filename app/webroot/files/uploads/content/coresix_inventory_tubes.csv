@@ -1,0 +1,7 @@
+Item Number,Material,Size (mm),Thickness (mm),OD (mm),Full Length,Quantity,Price Each,Flatness,Roughness,TTV,Orientation,Thickness Tol,Dimension Tol,Grade
+B0001,Soda Lime,200mm,1,12,50,10,10,1,1,1,1, +/- 15um, +/- 0.10mm,X
+B0002,Soda Lime,200mm,1,12,45,10,10,1,1,1,1, +/- 15um, +/- 0.10mm,X
+B0003,Soda Lime,200mm,1,14,44,10,10,1,1,1,1, +/- 15um, +/- 0.10mm,X
+B0004,Soda Lime,200mm,1,16,3,10,10,1,1,1,1, +/- 15um, +/- 0.10mm,X
+C0001,Soda Lime,200mm,1,12,35,10,10,1,1,1,1, +/- 15um, +/- 0.10mm,X
+C0002,Soda Lime,200mm,1,10,23,10,10,1,1,1,1, +/- 15um, +/- 0.10mm,X
